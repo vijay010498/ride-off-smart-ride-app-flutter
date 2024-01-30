@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ride_off_smart_ride_app_flutter/routes.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/splash/splash_screen.dart';
+import '../../../constants.dart';
+import '../../../theme.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,45 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Smart Ride',
-      theme: ThemeData(
-        
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
-      ),
-      home: MyHomePage(),
+      theme: AppTheme.lightTheme(context),
+      initialRoute: SplashScreen.routeName,
+      routes: routes,
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white, 
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ClipOval(
-              child: Image.asset(
-                'lib/assets/logo.jpg',
-                width: 200,
-                height: 200,
-              ),
-            ),
-            const SizedBox(height: 16),
-            const Text(
-              'SMART RIDE',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 34,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
