@@ -4,9 +4,12 @@ import '../../../theme.dart';
 import 'components/otp_form.dart';
 
 class OtpScreen extends StatelessWidget {
+  final String phoneNumber; // Define phoneNumber variable
+
+  OtpScreen({Key? key, required this.phoneNumber}) : super(key: key);
+
   static String routeName = "/otp";
 
-  const OtpScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,14 +28,14 @@ class OtpScreen extends StatelessWidget {
                   "OTP Verification",
                   style: headingStyle,
                 ),
-                const Text("We sent your code to +1 898 860 ***"),
+                Text("We sent your code to $phoneNumber"), // Display phone number here
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text("This code will expired in "),
+                    const Text("This code will expire in "),
                     TweenAnimationBuilder(
-                      tween: Tween(begin: 30.0, end: 0.0),
-                      duration: const Duration(seconds: 30),
+                      tween: Tween(begin: 60.0, end: 0.0),
+                      duration: const Duration(seconds: 121),
                       builder: (_, dynamic value, child) => Text(
                         "00:${value.toInt()}",
                         style: const TextStyle(color: themePrimaryColor),
@@ -59,3 +62,4 @@ class OtpScreen extends StatelessWidget {
     );
   }
 }
+

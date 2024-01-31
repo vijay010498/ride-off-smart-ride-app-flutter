@@ -1,10 +1,11 @@
+import 'package:logger/logger.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/otp/otp_screen.dart';
-import 'package:ride_off_smart_ride_app_flutter/theme.dart';
 import 'package:flutter/material.dart';
 import '../../../components/custom_suffix_icon.dart';
-import '../../../components/form_error.dart';
 import '../../../constants.dart';
-import '../../../theme.dart';
+import '../../../helpers/errorhelper.dart';
+import '../../../helpers/textformathelper.dart';
+import '../../../services/otpservice.dart';
 
 class OtpPhoneNumberForm extends StatefulWidget{
   const OtpPhoneNumberForm({super.key});
@@ -35,6 +36,19 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
     }
   }
 
+  void _handleOtpGenerationError(dynamic errorMessage) {
+    new ErrorHelper().showErrorMessage(context, errorMessage);
+  }
+
+  void _generateOtp(String phoneNumber) async {
+    try {
+      final otpResponse = await new OtpApiService().generateOtp(phoneNumber);
+      // Handle OTP generation response
+    } catch (error) {
+      _handleOtpGenerationError(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context){
     return Form(
@@ -43,13 +57,14 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
         children: [
           TextFormField(
             keyboardType: TextInputType.phone,
-            onSaved: (newValue) => phoneNumber = newValue,
             onChanged: (value){
               if(value.isNotEmpty){
                 removeError(error: phoneNumberNullError);
+                phoneNumber = value;
               }
               return;
             },
+            maxLength: 10,
             validator: (value){
               if(value!.isEmpty){
                 addError(error: phoneNumberNullError);
@@ -57,18 +72,22 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
               }
               return null;
             },
+
             decoration: const InputDecoration(
                 labelText: "Phone Number",
                 hintText: "Please enter your phone number",
                 floatingLabelBehavior: FloatingLabelBehavior.always,
                 suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Phone.svg")
             ),
+
           ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                String formattedPhoneNumber = TextFormatHelper.maskPhoneNumber(phoneNumber!);
+                _generateOtp(TextFormatHelper.formatPhoneNumber(phoneNumber!));
+                Navigator.pushNamed(context, OtpScreen.routeName, arguments: formattedPhoneNumber);
               }
             },
             child: const Text("Continue"),
