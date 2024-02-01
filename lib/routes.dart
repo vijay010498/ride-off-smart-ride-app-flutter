@@ -9,9 +9,5 @@ import 'screens/splash/splash_screen.dart';
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
   OtpPhoneNumberScreen.routeName: (context) => const OtpPhoneNumberScreen(),
-  // Modify route for OtpScreen to accept phone number argument
-  OtpScreen.routeName: (context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String; // Extract phone number from arguments
-    return OtpScreen(phoneNumber: args); // Pass the phone number to OtpScreen
-  },
+  OtpScreen.routeName: (context) => OtpScreen()
 };

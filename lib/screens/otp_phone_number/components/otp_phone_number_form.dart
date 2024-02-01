@@ -42,6 +42,10 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
 
   void _generateOtp(String phoneNumber) async {
     try {
+      Logger log = new Logger();
+
+      log.i("Received Phone Number : $phoneNumber");
+
       final otpResponse = await new OtpApiService().generateOtp(phoneNumber);
       // Handle OTP generation response
     } catch (error) {
@@ -85,9 +89,16 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                String formattedPhoneNumber = TextFormatHelper.maskPhoneNumber(phoneNumber!);
-                _generateOtp(TextFormatHelper.formatPhoneNumber(phoneNumber!));
-                Navigator.pushNamed(context, OtpScreen.routeName, arguments: formattedPhoneNumber);
+                String maskedPhoneNumber = TextFormatHelper.maskPhoneNumber(phoneNumber!);
+                String formattedPhoneNumber = TextFormatHelper.formatPhoneNumber(phoneNumber!);
+
+                Map<String, String> arguments = {
+                  'maskedPhoneNumber': maskedPhoneNumber,
+                  'formattedPhoneNumber': formattedPhoneNumber
+                };
+                _generateOtp(arguments['formattedPhoneNumber']!);
+
+                Navigator.pushNamed(context, OtpScreen.routeName, arguments: arguments);
               }
             },
             child: const Text("Continue"),

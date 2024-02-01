@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ride_off_smart_ride_app_flutter/services/verifyotpservice.dart';
 
 import '../../../constants.dart';
 import '../../../theme.dart';
@@ -18,6 +19,8 @@ class _OtpFormState extends State<OtpForm> {
   FocusNode? pin4FocusNode;
   FocusNode? pin5FocusNode;
   FocusNode? pin6FocusNode;
+
+  String collatedOTP = '';
 
   @override
   void initState() {
@@ -39,14 +42,51 @@ class _OtpFormState extends State<OtpForm> {
     pin6FocusNode!.dispose();
   }
 
+  void clearForm(){
+    pin2FocusNode!.unfocus(); // Ensure focus is removed from all fields
+    pin3FocusNode!.unfocus();
+    pin4FocusNode!.unfocus();
+    pin5FocusNode!.unfocus();
+    pin6FocusNode!.unfocus();
+  }
+
   void nextField(String value, FocusNode? focusNode) {
     if (value.length == 1) {
       focusNode!.requestFocus();
     }
   }
 
+  void _verifyOtp(String otp, String formattedPhoneNumber) async {
+    bool isOtpValid = await VerifyOtpApiService().verifyOtp(formattedPhoneNumber,  otp);
+    if (isOtpValid) {
+      // Display success message (Snackbar or navigate to next screen)
+      collatedOTP = '';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('OTP Verified Successfully'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } else {
+      // Display error message
+      collatedOTP = '';
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Invalid OTP. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      clearForm();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    Map<String, String> arguments = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    String formattedPhoneNumber = arguments['formattedPhoneNumber']!;
+
     return Form(
       child: Column(
         children: [
@@ -64,6 +104,7 @@ class _OtpFormState extends State<OtpForm> {
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) {
+                    collatedOTP = collatedOTP + value;
                     nextField(value, pin2FocusNode);
                   },
                 ),
@@ -77,7 +118,10 @@ class _OtpFormState extends State<OtpForm> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin3FocusNode),
+                  onChanged: (value) {
+                    collatedOTP = collatedOTP + value;
+                    nextField(value, pin3FocusNode);
+                  },
                 ),
               ),
               SizedBox(
@@ -89,7 +133,10 @@ class _OtpFormState extends State<OtpForm> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin4FocusNode),
+                  onChanged: (value){
+                    collatedOTP = collatedOTP + value;
+                    nextField(value, pin4FocusNode);
+                    },
                 ),
               ),
               SizedBox(
@@ -101,7 +148,10 @@ class _OtpFormState extends State<OtpForm> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin5FocusNode),
+                  onChanged: (value){
+                    collatedOTP = collatedOTP + value;
+                    nextField(value, pin5FocusNode);
+                  },
                 ),
               ),
               SizedBox(
@@ -113,7 +163,10 @@ class _OtpFormState extends State<OtpForm> {
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
-                  onChanged: (value) => nextField(value, pin6FocusNode),
+                  onChanged: (value) {
+                    collatedOTP = collatedOTP + value;
+                    nextField(value, pin6FocusNode);
+                  },
                 ),
               ),
               SizedBox(
@@ -126,6 +179,7 @@ class _OtpFormState extends State<OtpForm> {
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
                   onChanged: (value) {
+                    collatedOTP = collatedOTP + value;
                     if (value.length == 1) {
                       pin6FocusNode!.unfocus();
                       // Then you need to check is the code is correct or not
@@ -137,7 +191,9 @@ class _OtpFormState extends State<OtpForm> {
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.15),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              _verifyOtp(collatedOTP, formattedPhoneNumber);
+            },
             child: const Text("Continue"),
           ),
         ],
