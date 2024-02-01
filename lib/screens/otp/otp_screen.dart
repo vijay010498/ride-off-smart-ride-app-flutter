@@ -11,6 +11,8 @@ import 'components/otp_form.dart';
 class OtpScreen extends StatefulWidget {
   static String routeName = "/otp";
 
+  const OtpScreen({super.key});
+
   @override
   _OtpScreenState createState() => _OtpScreenState();
 }

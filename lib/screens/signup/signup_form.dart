@@ -46,12 +46,17 @@ class _SignUpFormState extends State<SignUpForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: emailNullError);
+              } else if (validatorRegExp.hasMatch(value)) {
+                removeError(error: invalidEmailError);
               }
               return;
             },
             validator: (value) {
               if (value!.isEmpty) {
                 addError(error: emailNullError);
+                return "";
+              } else if (!validatorRegExp.hasMatch(value)) {
+                addError(error: invalidEmailError);
                 return "";
               }
               return null;
@@ -109,11 +114,13 @@ class _SignUpFormState extends State<SignUpForm> {
               suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/User.svg"),
             ),
           ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 20),
+          FormError(errors: errors),
+          const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
               if (_formKey.currentState!.validate()) {
-                // Add the logic to proceed after validation
+                // TODO Add the logic to proceed after validation
               }
             },
             child: const Text("Continue"),

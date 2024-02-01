@@ -22,8 +22,9 @@ const headingStyle = TextStyle(
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
-final RegExp validatorRegExp =
-RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp validatorRegExp = RegExp(
+  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+);
 const String emailNullError = "Empty email, please enter a valid email address";
 const String invalidEmailError = "Invalid email address";
 const String nameNullError = "Please Enter your name";

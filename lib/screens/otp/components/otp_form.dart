@@ -67,7 +67,7 @@ class _OtpFormState extends State<OtpForm> {
           content: Text('OTP Verified Successfully'),
           duration: Duration(seconds: 2),
         ),
-      ),
+      );
       Navigator.pushNamed(context, SignUpScreen.routeName);
     } else {
       // Display error message

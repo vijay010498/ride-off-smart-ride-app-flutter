@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/routes.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/splash/splash_screen.dart';
-import '../../../constants.dart';
 import '../../../theme.dart';
 
 void main() {
