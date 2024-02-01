@@ -8,6 +8,6 @@ import 'screens/splash/splash_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
-  OtpScreen.routeName: (context) => const OtpScreen(),
-  OtpPhoneNumberScreen.routeName: (context) => const OtpPhoneNumberScreen()
+  OtpPhoneNumberScreen.routeName: (context) => const OtpPhoneNumberScreen(),
+  OtpScreen.routeName: (context) => OtpScreen()
 };
