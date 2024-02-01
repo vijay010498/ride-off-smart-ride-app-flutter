@@ -29,6 +29,10 @@ const String invalidEmailError = "Invalid email address";
 const String nameNullError = "Please Enter your name";
 const String phoneNumberNullError = "Please Enter your phone number";
 const String addressNullError = "Please Enter your address";
+//Signup Error
+const String firstNameNullError = "Please enter your first name";
+const String lastNameNullError = "Please enter your last name";
+
 
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 16),
