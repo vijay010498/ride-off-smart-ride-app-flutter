@@ -33,7 +33,7 @@ class OtpPhoneNumberScreen extends StatelessWidget {
                   const OtpPhoneNumberForm(),
                   const SizedBox(height: 30),
                   Text(
-                    "By continuing your confirm that you agree \nwith our Terms and Conditions",
+                    "By continuing, you confirm that you agree \nwith our Terms and Conditions",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),

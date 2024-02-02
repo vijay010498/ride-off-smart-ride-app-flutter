@@ -37,19 +37,20 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
   }
 
   void _handleOtpGenerationError(dynamic errorMessage) {
-    new ErrorHelper().showErrorMessage(context, errorMessage);
+    ErrorHelper().showErrorMessage(context, errorMessage);
   }
 
-  void _generateOtp(String phoneNumber) async {
+  Future<bool> _generateOtp(String phoneNumber) async {
     try {
-      Logger log = new Logger();
+      Logger log = Logger();
 
       log.i("Received Phone Number : $phoneNumber");
 
-      final otpResponse = await new OtpApiService().generateOtp(phoneNumber);
       // Handle OTP generation response
+      await new OtpApiService().generateOtp(phoneNumber);
+      return true; // OTP generation successful
     } catch (error) {
-      _handleOtpGenerationError(error);
+      return false;
     }
   }
 
@@ -87,18 +88,26 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               if (_formKey.currentState!.validate()) {
                 String maskedPhoneNumber = TextFormatHelper.maskPhoneNumber(phoneNumber!);
                 String formattedPhoneNumber = TextFormatHelper.formatPhoneNumber(phoneNumber!);
 
-                Map<String, String> arguments = {
-                  'maskedPhoneNumber': maskedPhoneNumber,
-                  'formattedPhoneNumber': formattedPhoneNumber
-                };
-                _generateOtp(arguments['formattedPhoneNumber']!);
+                bool otpGenerated = await _generateOtp(formattedPhoneNumber);
+                Logger log = Logger();
 
-                Navigator.pushNamed(context, OtpScreen.routeName, arguments: arguments);
+                log.i("otpGenerated : $otpGenerated");
+
+
+                if (otpGenerated) {
+                  Map<String, String> arguments = {
+                    'maskedPhoneNumber': maskedPhoneNumber,
+                    'formattedPhoneNumber': formattedPhoneNumber
+                  };
+                  Navigator.pushNamed(context, OtpScreen.routeName, arguments: arguments);
+                } else {
+                  return _handleOtpGenerationError('Failed to generate OTP. Please try again.');
+                }
               }
             },
             child: const Text("Continue"),

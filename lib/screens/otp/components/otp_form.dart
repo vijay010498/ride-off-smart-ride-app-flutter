@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/verifyotpservice.dart';
 
+import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dart';
 import '../../../constants.dart';
 import '../../../theme.dart';
 
@@ -67,6 +68,7 @@ class _OtpFormState extends State<OtpForm> {
           duration: Duration(seconds: 2),
         ),
       );
+      Navigator.pushNamed(context, SignUpScreen.routeName);
     } else {
       // Display error message
       collatedOTP = '';
