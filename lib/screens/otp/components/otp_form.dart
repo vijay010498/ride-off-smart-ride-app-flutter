@@ -58,7 +58,7 @@ class _OtpFormState extends State<OtpForm> {
   }
 
   void _verifyOtp(String otp, String formattedPhoneNumber) async {
-    Map<String, bool> response = await VerifyOtpApiService().verifyOtp(formattedPhoneNumber,  otp);
+    Map<String, dynamic> response = await VerifyOtpApiService().verifyOtp(formattedPhoneNumber,  otp);
     bool success = response['success']!;
     bool isSignedUp = response['isSignedUp']!;
     if (success) {

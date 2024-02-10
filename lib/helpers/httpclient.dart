@@ -4,7 +4,7 @@ import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
 class HttpClient {
   static Future<http.Response>  sendRequest(
       HttpMethod method,
-      String payload,
+      String? payload,
       String uri, {
         String? authToken, // Optional Bearer token parameter
       }) async {

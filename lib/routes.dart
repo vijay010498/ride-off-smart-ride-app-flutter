@@ -1,6 +1,7 @@
 //import 'dart:js';
 
 import 'package:flutter/cupertino.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/home/home_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/otp/otp_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/otp_phone_number/otp_phone_number_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/verification/complete_verification.dart';
@@ -16,5 +17,6 @@ final Map<String, WidgetBuilder> routes = {
   SignUpScreen.routeName: (context) => const SignUpScreen(),
   FaceVerificationOptionsScreen.routeName: (context) => const FaceVerificationOptionsScreen(),
   StartVerification.routeName: (context) => const StartVerification(),
-  CompleteVerification.routeName: (context) => const CompleteVerification()
+  CompleteVerification.routeName: (context) => const CompleteVerification(),
+  HomeScreen.routeName: (context) => const HomeScreen()
 };
