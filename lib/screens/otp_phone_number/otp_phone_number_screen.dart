@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'components/otp_phone_number_form.dart';
 import '../../../constants.dart';
-import '../../../theme.dart';
 
 class OtpPhoneNumberScreen extends StatelessWidget {
   static String routeName = "/otp_phone_number_screen";

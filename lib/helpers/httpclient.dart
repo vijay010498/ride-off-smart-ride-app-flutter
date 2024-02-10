@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:logger/logger.dart';
 import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
 
 class HttpClient {
-  static Future<Map<String, dynamic>> sendRequest(
+  static Future<http.Response>  sendRequest(
       HttpMethod method,
       String payload,
       String uri, {
@@ -47,12 +45,7 @@ class HttpClient {
         );
         break;
     }
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to make ${method.toString()} request: ${response.reasonPhrase}');
-    }
+    return response;
   }
 
   static Map<String, String> _createHeaders(String? authToken) {

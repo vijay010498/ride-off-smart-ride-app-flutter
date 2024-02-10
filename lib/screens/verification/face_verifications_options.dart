@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/splash/splash_screen.dart';
 import 'package:lottie/lottie.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/verification/start_verification.dart';
 
 class FaceVerificationOptionsScreen extends StatelessWidget {
   static String routeName = "/face_verifications_options";
@@ -35,22 +35,30 @@ class FaceVerificationOptionsScreen extends StatelessWidget {
                   height: 300,
                   fit: BoxFit.fill,
                 )),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SplashScreen(),
-                  ),
-                );
-              },
-              child: const Text('Start Face Verification'),
+            const SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const StartVerification(),
+                    ),
+                  );
+                },
+                child: const Text('Get Verified'),
+              ),
             ),
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                // Perform skip action
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const StartVerification(), // TODO add code to navigate to Home Page
+                  ),
+                );
               },
               child: const Text('Skip for Now'),
             ),

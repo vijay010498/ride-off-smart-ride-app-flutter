@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:logger/logger.dart';
 
 import '../Enums/httpenums.dart';
 import '../config/apiconfig.dart';
@@ -7,21 +6,28 @@ import '../helpers/httpclient.dart';
 
 class VerifyOtpApiService{
 
-  Future<bool> verifyOtp(String phoneNumber, String otp) async {
+  Future<Map<String, bool>> verifyOtp(String phoneNumber, String otp) async {
     try {
       final payload = jsonEncode({'phoneNumber': phoneNumber, 'userOtp': otp});
       final response = await HttpClient.sendRequest(
         HttpMethod.POST,
         payload,
-        '${ApiConfig.baseUrl}${ApiConfig.verifyOtpEndpoint}',
+        '${ApiConfig.baseUrlAuth}${ApiConfig.verifyOtpEndpoint}',
       );
-      if (response['message'] == "OTP Verified Successfully") {
-        return true;
+
+      if (response.statusCode == 201) {
+        final responseBody = jsonDecode(response.body);
+        // TODO get access and refresh token save into secure storage
+        final isSignedUp = responseBody['isSignedUp'] as bool;
+
+        return { 'success': true, 'isSignedUp':isSignedUp };
       } else {
-        return false;
+        print("Failed to Verify OTP: ${response.reasonPhrase}");
+        return { 'success': false, 'isSignedUp':false };;
       }
-    } catch (e) {
-      return false;
+    } catch (error) {
+      print("verifyOtp----$error");
+      return { 'success': false, 'isSignedUp':false };;
     }
   }
 }
