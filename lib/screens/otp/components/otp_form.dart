@@ -70,10 +70,10 @@ class _OtpFormState extends State<OtpForm> {
       );
       collatedOTP = '';
       if(!isSignedUp) {
-        Navigator.pushReplacementNamed(context, SignUpScreen.routeName);
+        Navigator.pushNamedAndRemoveUntil(context, SignUpScreen.routeName, (route) => false);
       } else {
         // TODO check is user is verified already / send to home screen
-        Navigator.pushReplacementNamed(context, FaceVerificationOptionsScreen.routeName);
+        Navigator.pushNamedAndRemoveUntil(context, FaceVerificationOptionsScreen.routeName, (route) => false);
       }
     } else {
       // Display error message

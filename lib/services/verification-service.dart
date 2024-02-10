@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:ride_off_smart_ride_app_flutter/config/apiconfig.dart';
 
 class VerificationApiService {
+  // TODO check this function
   static Future<Map<String, dynamic>> sendImagesToBackend(
       File selfieImage, File photoIdImage) async {
     try {

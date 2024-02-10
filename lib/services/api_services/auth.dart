@@ -25,6 +25,11 @@ class AuthService {
         authToken: accessToken,
       );
 
+      if (response.statusCode == 403) {
+        // user is blocked
+        return {'isBlocked': true};
+      }
+
       if (response.statusCode != 200) {
         await _handleTokenRefresh();
         final newAccessToken = await _getAccessToken();
