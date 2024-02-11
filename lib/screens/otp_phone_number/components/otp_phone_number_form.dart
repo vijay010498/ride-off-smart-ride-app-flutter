@@ -47,9 +47,12 @@ class _OtpPhoneNumberFormState extends State<OtpPhoneNumberForm>{
       log.i("Received Phone Number : $phoneNumber");
 
       // Handle OTP generation response
-      await new OtpApiService().generateOtp(phoneNumber);
-      return true; // OTP generation successful
+      return OtpApiService().generateOtp(phoneNumber);
     } catch (error) {
+
+      Logger log = Logger();
+
+      log.i("error : $error");
       return false;
     }
   }

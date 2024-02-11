@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifications_options.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/verifyotpservice.dart';
 
 import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dart';
 import '../../../constants.dart';
-import '../../../theme.dart';
 
 class OtpForm extends StatefulWidget {
   const OtpForm({
@@ -58,22 +58,28 @@ class _OtpFormState extends State<OtpForm> {
   }
 
   void _verifyOtp(String otp, String formattedPhoneNumber) async {
-    bool isOtpValid = await VerifyOtpApiService().verifyOtp(formattedPhoneNumber,  otp);
-    if (isOtpValid) {
-      // Display success message (Snackbar or navigate to next screen)
-      collatedOTP = '';
+    Map<String, dynamic> response = await VerifyOtpApiService().verifyOtp(formattedPhoneNumber,  otp);
+    bool success = response['success']!;
+    bool isSignedUp = response['isSignedUp']!;
+    if (success) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('OTP Verified Successfully'),
           duration: Duration(seconds: 2),
         ),
       );
-      Navigator.pushNamed(context, SignUpScreen.routeName);
+      collatedOTP = '';
+      if(!isSignedUp) {
+        Navigator.pushNamedAndRemoveUntil(context, SignUpScreen.routeName, (route) => false);
+      } else {
+        // TODO check is user is verified already / send to home screen
+        Navigator.pushNamedAndRemoveUntil(context, FaceVerificationOptionsScreen.routeName, (route) => false);
+      }
     } else {
       // Display error message
       collatedOTP = '';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text('Invalid OTP. Please try again.'),
           duration: Duration(seconds: 2),
         ),

@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/blocked_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/home/home_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/otp_phone_number/otp_phone_number_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifications_options.dart';
+import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
+
+import '../../services/storage/secureStorageService.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key); // Corrected constructor definition
+  const SplashScreen({Key? key})
+      : super(key: key); // Corrected constructor definition
 
   static String routeName = "/";
 
@@ -17,22 +25,47 @@ class _SplashScreenState extends StatefulWidget {
   _SplashScreenStateState createState() => _SplashScreenStateState();
 }
 
+final SecureStorageService secureStorageService = SecureStorageService();
+final AuthService authService = AuthService();
+
 class _SplashScreenStateState extends State<_SplashScreenState> {
   @override
   void initState() {
     super.initState();
-    // Add initialization tasks here, like loading data, checking authentication, etc.
     _initializeApp();
   }
 
-  // Simulate initialization process
   Future<void> _initializeApp() async {
-    await Future.delayed(Duration(seconds: 3)); // Simulate a delay of 3 seconds
-    // Navigate to home page
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => OtpPhoneNumberScreen()), // Replace with your actual home screen widget
-    );
+    var currentUser = await authService.getCurrentUser();
+    if (currentUser != null && currentUser.isNotEmpty) {
+      var isBlocked = currentUser['isBlocked'] as bool?;
+      var signedUp = currentUser['signedUp'] as bool?;
+      var faceIdVerified = currentUser['faceIdVerified'] as bool?;
+      if (isBlocked != null && isBlocked) {
+        // user is blocked
+        Navigator.pushNamedAndRemoveUntil(
+            context, BlockedMessageWidget.routeName, (route) => false);
+      } else if (signedUp != null && faceIdVerified != null) {
+        if (!signedUp) {
+          Navigator.pushNamedAndRemoveUntil(
+              context, SignUpScreen.routeName, (route) => false);
+        } else if (!faceIdVerified) {
+          // TODO use TTL to show verification page
+          Navigator.pushNamedAndRemoveUntil(context,
+              FaceVerificationOptionsScreen.routeName, (route) => false);
+        } else {
+          Navigator.pushNamedAndRemoveUntil(
+              context, HomeScreen.routeName, (route) => false);
+        }
+      } else {
+        // default login user
+        Navigator.pushNamedAndRemoveUntil(
+            context, OtpPhoneNumberScreen.routeName, (route) => false);
+      }
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, OtpPhoneNumberScreen.routeName, (route) => false);
+    }
   }
 
   @override

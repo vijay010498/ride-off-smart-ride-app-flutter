@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import '../../../constants.dart';
-import '../../../theme.dart';
 import '../../helpers/errorhelper.dart';
 import '../../services/otpservice.dart';
 import 'components/otp_form.dart';
@@ -28,7 +27,7 @@ class _OtpScreenState extends State<OtpScreen> {
   }
 
   void startTimer() {
-    const oneSec = const Duration(seconds: 1);
+    const oneSec = Duration(seconds: 1);
     _timer = Timer.periodic(
       oneSec,
           (timer) {
