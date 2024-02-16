@@ -6,6 +6,7 @@ class ApiConfig {
   static const String verifyOtpEndpoint = '/auth/otp/verify';
   static const String currentUserEndpoint = '/auth/user';
   static const String refreshTokenEndpoint = '/auth/token/refresh';
+  static const String signUpEndpoint = '/auth/user/signup';
 
   // Verification service
   static const String baseUrlVerification = 'http://10.0.2.2:3001/api';
