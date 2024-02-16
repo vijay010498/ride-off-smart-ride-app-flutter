@@ -57,7 +57,6 @@ class AuthService {
   Future<void> _handleTokenRefresh() async {
     final refreshToken = await secureStorageService.read(_keyRefreshToken);
     if (refreshToken == null) return;
-
     final response = await HttpClient.sendRequest(
       HttpMethod.GET,
       null, // No payload for GET request
@@ -66,7 +65,9 @@ class AuthService {
     );
 
     if (response.statusCode != 200) {
+      // refresh token failed - delete both access and refresh token
       await secureStorageService.delete(_keyRefreshToken);
+      await secureStorageService.delete(_keyAccessToken);
       return;
     }
 
