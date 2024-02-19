@@ -15,7 +15,7 @@ class VerifyOtpApiService {
       final response = await HttpClient.sendRequest(
         HttpMethod.POST,
         payload,
-        '${ApiConfig.baseUrlAuth}${ApiConfig.verifyOtpEndpoint}',
+        '${ApiConfig.baseUrl}${ApiConfig.verifyOtpEndpoint}',
       );
 
       if (response.statusCode == 201) {

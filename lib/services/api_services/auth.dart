@@ -21,7 +21,7 @@ class AuthService {
       final response = await HttpClient.sendRequest(
         HttpMethod.GET,
         null, // No payload for GET request
-        '${ApiConfig.baseUrlAuth}${ApiConfig.currentUserEndpoint}',
+        '${ApiConfig.baseUrl}${ApiConfig.currentUserEndpoint}',
         authToken: accessToken,
       );
 
@@ -37,7 +37,7 @@ class AuthService {
         final newCurrentUserResponse = await HttpClient.sendRequest(
           HttpMethod.GET,
           null, // No payload for GET request
-          '${ApiConfig.baseUrlAuth}${ApiConfig.currentUserEndpoint}',
+          '${ApiConfig.baseUrl}${ApiConfig.currentUserEndpoint}',
           authToken: newAccessToken,
         );
         return jsonDecode(newCurrentUserResponse.body);
@@ -60,7 +60,7 @@ class AuthService {
     final response = await HttpClient.sendRequest(
       HttpMethod.GET,
       null, // No payload for GET request
-      '${ApiConfig.baseUrlAuth}${ApiConfig.refreshTokenEndpoint}',
+      '${ApiConfig.baseUrl}${ApiConfig.refreshTokenEndpoint}',
       authToken: refreshToken,
     );
 
