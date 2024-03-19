@@ -34,6 +34,12 @@ const String addressNullError = "Please Enter your address";
 const String firstNameNullError = "Please enter your first name";
 const String lastNameNullError = "Please enter your last name";
 
+//Create Ride Error
+const String modelNullError = "Please enter the car's model";
+const String brandNullError = "Please enter the car's brand";
+const String startNullError = "Please enter the Start Address";
+const String destinationNullError = "Please enter the Destination Address";
+const String seatsNullError = "Please enter number of seats";
 
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 16),
