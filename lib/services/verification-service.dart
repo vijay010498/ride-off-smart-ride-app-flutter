@@ -13,7 +13,7 @@ class VerificationApiService {
       // Create multipart request
       var request = http.MultipartRequest(
         HttpMethod.POST.toString(),
-        Uri.parse('${ApiConfig.baseUrlVerification}${ApiConfig.faceVerification}'),
+        Uri.parse('${ApiConfig.baseUrl}${ApiConfig.faceVerification}'),
       );
 
       // Add selfie image to request

@@ -21,7 +21,7 @@ class AuthService {
       final response = await HttpClient.sendRequest(
         HttpMethod.GET,
         null, // No payload for GET request
-        '${ApiConfig.baseUrlAuth}${ApiConfig.currentUserEndpoint}',
+        '${ApiConfig.baseUrl}${ApiConfig.currentUserEndpoint}',
         authToken: accessToken,
       );
 
@@ -37,7 +37,7 @@ class AuthService {
         final newCurrentUserResponse = await HttpClient.sendRequest(
           HttpMethod.GET,
           null, // No payload for GET request
-          '${ApiConfig.baseUrlAuth}${ApiConfig.currentUserEndpoint}',
+          '${ApiConfig.baseUrl}${ApiConfig.currentUserEndpoint}',
           authToken: newAccessToken,
         );
         return jsonDecode(newCurrentUserResponse.body);
@@ -57,16 +57,17 @@ class AuthService {
   Future<void> _handleTokenRefresh() async {
     final refreshToken = await secureStorageService.read(_keyRefreshToken);
     if (refreshToken == null) return;
-
     final response = await HttpClient.sendRequest(
       HttpMethod.GET,
       null, // No payload for GET request
-      '${ApiConfig.baseUrlAuth}${ApiConfig.refreshTokenEndpoint}',
+      '${ApiConfig.baseUrl}${ApiConfig.refreshTokenEndpoint}',
       authToken: refreshToken,
     );
 
     if (response.statusCode != 200) {
+      // refresh token failed - delete both access and refresh token
       await secureStorageService.delete(_keyRefreshToken);
+      await secureStorageService.delete(_keyAccessToken);
       return;
     }
 
