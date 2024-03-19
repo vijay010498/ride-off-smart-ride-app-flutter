@@ -13,7 +13,7 @@ class SignUpApiService{
     Future<Map<String, dynamic>> signUpUser(String email, String firstName, String lastName) async {
       final String? accessToken = await secureStorageService.read(SecureStorageService.keyAccessToken);
       final payload = jsonEncode({'email': email,'firstName':firstName, 'lastName':lastName});
-      final response =  await HttpClient.sendRequest(HttpMethod.POST, payload, '${ApiConfig.baseUrlAuth}${ApiConfig.signUpEndpoint}',authToken: accessToken);
+      final response =  await HttpClient.sendRequest(HttpMethod.POST, payload, '${ApiConfig.baseUrl}${ApiConfig.signUpEndpoint}',authToken: accessToken);
       return {'success': true};
   }
 }
