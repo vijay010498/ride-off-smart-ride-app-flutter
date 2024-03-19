@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ride_off_smart_ride_app_flutter/helpers/errorhelper.dart';
+import 'package:ride_off_smart_ride_app_flutter/services/signupservice.dart';
 import '../../../components/custom_suffix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
@@ -34,6 +36,27 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
+void _handleSignUpError(dynamic errorMessage) {
+    new ErrorHelper().showErrorMessage(context, errorMessage);
+  }
+
+  void _signUpUser(String email, String firstName, String lastName) async {
+      try {
+        Map<String, dynamic> response = await new SignUpApiService().signUpUser(email, firstName, lastName);
+        bool success = response['success']!;
+        if (success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Signed Up Successfully'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+        }
+      } catch (error) {
+        _handleSignUpError(error);
+       }
+    }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -46,8 +69,10 @@ class _SignUpFormState extends State<SignUpForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: emailNullError);
+                email=value;
               } else if (validatorRegExp.hasMatch(value)) {
                 removeError(error: invalidEmailError);
+                email=value;
               }
               return;
             },
@@ -74,6 +99,7 @@ class _SignUpFormState extends State<SignUpForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: firstNameNullError);
+                firstName=value;
               }
               return;
             },
@@ -97,6 +123,7 @@ class _SignUpFormState extends State<SignUpForm> {
             onChanged: (value) {
               if (value.isNotEmpty) {
                 removeError(error: lastNameNullError);
+                lastName = value;
               }
               return;
             },
@@ -118,13 +145,15 @@ class _SignUpFormState extends State<SignUpForm> {
           FormError(errors: errors),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                // TODO Add the logic to proceed after validation
-              }
-            },
-            child: const Text("Continue"),
-          ),
+            onPressed: () async {
+                if (_formKey.currentState!.validate()) {
+                   _signUpUser(email!,firstName!,lastName!);
+                  }
+                  // TODO Add the logic to proceed after validation
+                
+              },
+              child: const Text("Continue"),
+            ),
         ],
       ),
     );
