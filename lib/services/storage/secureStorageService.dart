@@ -5,6 +5,8 @@ class SecureStorageService {
 
   static const String keyAccessToken = 'accessToken';
   static const String keyRefreshToken = 'refreshToken';
+  static const String KeyLongitude = 'lastLocationLongitude';
+  static const String KeyLatitude = 'lastLocationLatitude';
 
   Future<void> write(String key, String value) async {
     await _storage.write(key: key, value: value);
