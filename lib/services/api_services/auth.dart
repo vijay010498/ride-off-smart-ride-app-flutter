@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/foundation.dart';
 import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
@@ -18,6 +17,7 @@ class AuthService {
   Future<Map<String, dynamic>> getCurrentUser() async {
     try {
       final accessToken = await _getAccessToken();
+      print('acccess-token-$accessToken');
       if (accessToken == null) return {};
 
       final response = await HttpClient.sendRequest(
@@ -47,7 +47,7 @@ class AuthService {
 
       return jsonDecode(response.body);
     } catch (error) {
-      print("getCurrentUser-error----${error}");
+      print("getCurrentUser-error----$error");
       rethrow;
     }
   }
@@ -84,11 +84,14 @@ class AuthService {
   Future updateUserLocation(double longitude, double latitude) async {
     try {
       // Compare last location to check should we make the API call
-      var lastLongitude = await secureStorageService.read(SecureStorageService.KeyLongitude);
-      var lastLatitude = await secureStorageService.read(SecureStorageService.KeyLatitude);
+      var lastLongitude =
+          await secureStorageService.read(SecureStorageService.KeyLongitude);
+      var lastLatitude =
+          await secureStorageService.read(SecureStorageService.KeyLatitude);
 
       if (lastLongitude != null && lastLatitude != null) {
-        if (double.parse(lastLongitude) == longitude && double.parse(lastLatitude) == latitude) {
+        if (double.parse(lastLongitude) == longitude &&
+            double.parse(lastLatitude) == latitude) {
           return;
         }
       }
@@ -96,12 +99,15 @@ class AuthService {
           jsonEncode({'longitude': longitude, 'latitude': latitude});
       final authToken = await secureStorageService.read(_keyAccessToken);
       final response = await HttpClient.sendRequest(HttpMethod.PATCH, payload,
-          '${ApiConfig.baseUrl}${ApiConfig.updateUserLocation}', authToken: authToken);
+          '${ApiConfig.baseUrl}${ApiConfig.updateUserLocation}',
+          authToken: authToken);
 
       if (response.statusCode == 204) {
         // Sore the location into storage
-        await secureStorageService.write(SecureStorageService.KeyLongitude, longitude.toString());
-        await secureStorageService.write(SecureStorageService.KeyLatitude, latitude.toString());
+        await secureStorageService.write(
+            SecureStorageService.KeyLongitude, longitude.toString());
+        await secureStorageService.write(
+            SecureStorageService.KeyLatitude, latitude.toString());
       }
       if (kDebugMode) {
         print('User-Location-Update:${response.statusCode}, ${response.body}');
@@ -110,6 +116,25 @@ class AuthService {
       if (kDebugMode) {
         print("updateUserLocation-error----$error");
       }
+    }
+  }
+
+  Future<bool> logoutUser() async {
+    try {
+      final authToken = await secureStorageService.read(_keyAccessToken);
+      await HttpClient.sendRequest(
+          HttpMethod.GET, null, '${ApiConfig.baseUrl}${ApiConfig.logoutUser}',
+          authToken: authToken);
+
+      // Clear Up all tokens and Locations
+      await secureStorageService.deleteAll();
+
+      return true;
+    } catch (error) {
+      if (kDebugMode) {
+        print("logoutUser-error----$error");
+      }
+      return false;
     }
   }
 }

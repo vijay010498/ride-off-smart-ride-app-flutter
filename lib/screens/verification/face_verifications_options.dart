@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/home/home_screen.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/verification/start_verification.dart';
 
 class FaceVerificationOptionsScreen extends StatelessWidget {
   static String routeName = "/face_verifications_options";
+
   const FaceVerificationOptionsScreen({super.key});
 
   @override
@@ -41,12 +41,7 @@ class FaceVerificationOptionsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const StartVerification(),
-                    ),
-                  );
+                  Navigator.pushNamed(context, HomeScreen.routeName);
                 },
                 child: const Text('Get Verified'),
               ),

@@ -7,6 +7,7 @@ class ApiConfig {
   static const String currentUserEndpoint = '/auth/user';
   static const String refreshTokenEndpoint = '/auth/token/refresh';
   static const String updateUserLocation = '/auth/user/location';
+  static const String logoutUser = '/auth/user/logout';
 
   // Verification service
   static const String faceVerification = '/verification/user';

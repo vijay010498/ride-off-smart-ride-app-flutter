@@ -55,20 +55,20 @@ class _OtpScreenState extends State<OtpScreen> {
     Map<String, String> arguments = ModalRoute.of(context)!.settings.arguments as Map<String, String>;
     String phoneNumber = arguments['maskedPhoneNumber']!;
     String formattedPhoneNumber = arguments['formattedPhoneNumber']!;
-    void _handleOtpGenerationError(dynamic errorMessage) {
-      new ErrorHelper().showErrorMessage(context, errorMessage);
+    void handleOtpGenerationError(dynamic errorMessage) {
+      ErrorHelper().showErrorMessage(context, errorMessage);
     }
-    void _resendOtp() async {
+    void resendOtp() async {
       try {
-        Logger log = new Logger();
+        Logger log = Logger();
 
         log.i("Received Phone Number : $formattedPhoneNumber");
 
-        final otpResponse = await new OtpApiService().generateOtp(formattedPhoneNumber);
+        final otpResponse = await OtpApiService().generateOtp(formattedPhoneNumber);
         // Handle OTP generation response
         resetTimer(); // Reset timer when OTP is resent
       } catch (error) {
-        _handleOtpGenerationError(error);
+        handleOtpGenerationError(error);
       }
     }
 
@@ -106,7 +106,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 const OtpForm(),
                 const SizedBox(height: 20),
                 GestureDetector(
-                  onTap: _resendOtp,
+                  onTap: resendOtp,
                   child: const Text(
                     "Resend OTP Code",
                     style: TextStyle(decoration: TextDecoration.underline),
