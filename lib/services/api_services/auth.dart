@@ -21,7 +21,6 @@ class AuthService {
   Future<Map<String, dynamic>> getCurrentUser() async {
     try {
       final accessToken = await _getAccessToken();
-      print('acccess-token-$accessToken');
       if (accessToken == null) return {};
 
       final response = await HttpClient.sendRequest(
@@ -233,7 +232,6 @@ class AuthService {
       if (userVehiclesResponse.statusCode == 200) {
         List<dynamic> jsonList = json.decode(userVehiclesResponse.body);
         List<Map<String, dynamic>> vehicles = jsonList.map((e) => e as Map<String, dynamic>).toList();
-        print(vehicles);
         return vehicles;
       } else {
         throw Exception('Failed to fetch user vehicles');
