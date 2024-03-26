@@ -46,6 +46,7 @@ dependencies:
   location: ^5.0.0-dev.8
 
   flutter_svg: any
+  image_picker: ^1.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter

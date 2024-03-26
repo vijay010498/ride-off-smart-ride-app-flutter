@@ -1,18 +1,28 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/vehicle_image_upload.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/vehicle_image_upload_box.dart';
 
 class VehicleImageUploadRowWidget extends StatefulWidget {
-  const VehicleImageUploadRowWidget({super.key});
+  final Function(List<File>) onImagesUpdated;
+
+  const VehicleImageUploadRowWidget({Key? key, required this.onImagesUpdated}) : super(key: key);
 
   @override
-  State<VehicleImageUploadRowWidget> createState() =>
-      _VehicleImageUploadRowWidgetState();
+  State<VehicleImageUploadRowWidget> createState() => _VehicleImageUploadRowWidgetState();
 }
 
 class _VehicleImageUploadRowWidgetState
     extends State<VehicleImageUploadRowWidget> {
+  List<File> _pickedImages = [];
   final ScrollController _scrollController = ScrollController();
 
+  void _handleImagePicked(File image) {
+    setState(() {
+      _pickedImages.add(image);
+    });
+    widget.onImagesUpdated(_pickedImages); // Notify the parent widget
+  }
   @override
   void initState() {
     super.initState();
@@ -53,9 +63,9 @@ class _VehicleImageUploadRowWidgetState
             mainAxisAlignment: MainAxisAlignment.start,
             children: List.generate(
               5,
-              (index) => const Padding(
-                padding: EdgeInsets.only(right: 8),
-                child: VehicleImageUploadBoxWidget(),
+                  (index) => Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: VehicleImageUploadBoxWidget(onImagePicked: _handleImagePicked), // Modify this line
               ),
             ),
           ),
