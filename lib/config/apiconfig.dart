@@ -10,6 +10,7 @@ class ApiConfig {
   static const String logoutUser = '/auth/user/logout';
   static const String getVehicleTypes = '/auth/profile/vehicle/types';
   static const String createNewVehicle = '/auth/profile/vehicle';
+  static const String getUserVehicles = '/auth/profile/vehicles';
   // Verification service
   static const String faceVerification = '/verification/user';
 }

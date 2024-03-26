@@ -203,7 +203,7 @@ class _AddVehicleScreenWidgetState extends State<AddVehicleScreenWidget> {
                         const SnackBar(content: Text('Vehicle added successfully')),
                       );
                       // Navigate back to previous page
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true); // true is used be previous screen to refresh the list
                     } else  {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Server Error, Please try again later')),

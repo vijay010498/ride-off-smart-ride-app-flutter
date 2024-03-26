@@ -89,9 +89,9 @@ class AuthService {
     try {
       // Compare last location to check should we make the API call
       var lastLongitude =
-          await secureStorageService.read(SecureStorageService.KeyLongitude);
+      await secureStorageService.read(SecureStorageService.KeyLongitude);
       var lastLatitude =
-          await secureStorageService.read(SecureStorageService.KeyLatitude);
+      await secureStorageService.read(SecureStorageService.KeyLatitude);
 
       if (lastLongitude != null && lastLatitude != null) {
         if (double.parse(lastLongitude) == longitude &&
@@ -100,7 +100,7 @@ class AuthService {
         }
       }
       final payload =
-          jsonEncode({'longitude': longitude, 'latitude': latitude});
+      jsonEncode({'longitude': longitude, 'latitude': latitude});
       final authToken = await _getAccessToken();
       final response = await HttpClient.sendRequest(HttpMethod.PATCH, payload,
           '${ApiConfig.baseUrl}${ApiConfig.updateUserLocation}',
@@ -155,7 +155,8 @@ class AuthService {
       } else {
         if (kDebugMode) {
           print(
-              "Failed to fetch vehicle types, status code: ${apiResponse.statusCode}");
+              "Failed to fetch vehicle types, status code: ${apiResponse
+                  .statusCode}");
         }
         return [];
       }
@@ -167,15 +168,13 @@ class AuthService {
     }
   }
 
-  Future<bool> createNewVehicle(
-      List<File> vehicleImages,
+  Future<bool> createNewVehicle(List<File> vehicleImages,
       String model,
       String type,
       String color,
       String year,
       String licensePlate,
-      String averageKmPerLitre,
-      ) async {
+      String averageKmPerLitre,) async {
     try {
       final accessToken = await _getAccessToken();
 
@@ -208,7 +207,7 @@ class AuthService {
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
 
-      if(response.statusCode == 201) {
+      if (response.statusCode == 201) {
         return true;
       }
 
@@ -218,6 +217,32 @@ class AuthService {
         print('createNewVehicle-error----$error');
       }
       return false;
+    }
+  }
+  Future<List<Map<String, dynamic>>> getUserVehicles() async {
+    try {
+      final accessToken = await _getAccessToken();
+
+      final userVehiclesResponse = await HttpClient.sendRequest(
+        HttpMethod.GET,
+        null,
+        '${ApiConfig.baseUrl}${ApiConfig.getUserVehicles}',
+        authToken: accessToken,
+      );
+
+      if (userVehiclesResponse.statusCode == 200) {
+        List<dynamic> jsonList = json.decode(userVehiclesResponse.body);
+        List<Map<String, dynamic>> vehicles = jsonList.map((e) => e as Map<String, dynamic>).toList();
+        print(vehicles);
+        return vehicles;
+      } else {
+        throw Exception('Failed to fetch user vehicles');
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print("getUserVehicles-error----$error");
+      }
+      rethrow;
     }
   }
 
