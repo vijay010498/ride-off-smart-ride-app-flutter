@@ -7,7 +7,6 @@ import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart'
 
 import '../../services/locationservice.dart';
 import '../../services/storage/secureStorageService.dart';
-import '../../widgets/bottom_navigation_bar.dart';
 import '../home/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
@@ -6,9 +5,10 @@ import 'package:ride_off_smart_ride_app_flutter/widgets/account/profile_section.
 import 'package:ride_off_smart_ride_app_flutter/widgets/account/settings_item.dart';
 
 import '../../screens/otp_phone_number/otp_phone_number_screen.dart';
+import '../vehicles/vehicles_screen.dart';
 
 class AccountScreenWidget extends StatelessWidget {
-  const AccountScreenWidget({Key? key});
+  const AccountScreenWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,16 @@ class AccountScreenWidget extends StatelessWidget {
           const ProfileSectionWidget(),
           Container(
             constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height *
+                maxHeight: MediaQuery
+                    .of(context)
+                    .size
+                    .height *
                     0.8), // Adjust the maxHeight as needed
             child: Column(
               children: [
-                const SettingsItemWidget(title: 'My Vehicles'),
+                SettingsItemWidget(title: 'My Vehicles', onTap: () {
+                  Navigator.pushNamed(context, VehiclesScreenWidget.routeName);
+                },),
                 SettingsItemWidget(
                   title: 'Log out',
                   onTap: () async {
@@ -37,11 +42,11 @@ class AccountScreenWidget extends StatelessWidget {
                         OtpPhoneNumberScreen.routeName,
                             (route) => false,
                       );
-                    }catch(error) {
+                    } catch (error) {
                       if (kDebugMode) {
                         print('Logout -error---$error');
-
-                      }Navigator.pushNamedAndRemoveUntil(
+                      }
+                      Navigator.pushNamedAndRemoveUntil(
                         context,
                         OtpPhoneNumberScreen.routeName,
                             (route) => false,

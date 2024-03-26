@@ -63,8 +63,7 @@ class _OtpScreenState extends State<OtpScreen> {
         Logger log = Logger();
 
         log.i("Received Phone Number : $formattedPhoneNumber");
-
-        final otpResponse = await OtpApiService().generateOtp(formattedPhoneNumber);
+        await OtpApiService().generateOtp(formattedPhoneNumber);
         // Handle OTP generation response
         resetTimer(); // Reset timer when OTP is resent
       } catch (error) {
