@@ -121,8 +121,8 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
               Text("Enter Passenger Details", style: headingStyle),
               Text("Fill the form to enter passenger details", textAlign: TextAlign.center),
               SizedBox(height: 30),
-              Expanded(
-              child: SingleChildScrollView(
+              
+              SingleChildScrollView(
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -269,7 +269,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                 ),
               ),
               ),
-              ),
+              
             ],
           ),
         ),

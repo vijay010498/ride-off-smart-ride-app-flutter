@@ -10,4 +10,7 @@ class ApiConfig {
 
   // Verification service
   static const String faceVerification = '/verification/user';
+
+  //Ride service
+  static const String getVehiclesEndpoint = '/auth/profile/vehicles';
 }
