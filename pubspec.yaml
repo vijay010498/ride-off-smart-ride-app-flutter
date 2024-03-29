@@ -44,6 +44,7 @@ dependencies:
   path_provider: ^2.1.1
   selfie_liveness: ^3.3.9
   flutter_secure_storage: ^4.2.1
+  location: ^5.0.0-dev.8
 
 dev_dependencies:
   flutter_test:

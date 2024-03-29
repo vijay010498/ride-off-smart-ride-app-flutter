@@ -6,6 +6,7 @@ import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dar
 import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifications_options.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
 
+import '../../services/locationservice.dart';
 import '../../services/storage/secureStorageService.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -29,6 +30,8 @@ final SecureStorageService secureStorageService = SecureStorageService();
 final AuthService authService = AuthService();
 
 class _SplashScreenStateState extends State<_SplashScreenState> {
+  final LocationService _locationService = LocationService();
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +44,8 @@ class _SplashScreenStateState extends State<_SplashScreenState> {
       var isBlocked = currentUser['isBlocked'] as bool?;
       var signedUp = currentUser['signedUp'] as bool?;
       var faceIdVerified = currentUser['faceIdVerified'] as bool?;
+      // Init Location Service
+      _locationService.initializeAndStart();
       if (isBlocked != null && isBlocked) {
         // user is blocked
         Navigator.pushNamedAndRemoveUntil(

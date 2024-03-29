@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:ffi';
 
+import 'package:flutter/foundation.dart';
 import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
 import 'package:ride_off_smart_ride_app_flutter/config/apiconfig.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/httpclient.dart';
@@ -77,5 +79,37 @@ class AuthService {
 
     await secureStorageService.write(_keyAccessToken, newAccessToken);
     await secureStorageService.write(_keyRefreshToken, newRefreshToken);
+  }
+
+  Future updateUserLocation(double longitude, double latitude) async {
+    try {
+      // Compare last location to check should we make the API call
+      var lastLongitude = await secureStorageService.read(SecureStorageService.KeyLongitude);
+      var lastLatitude = await secureStorageService.read(SecureStorageService.KeyLatitude);
+
+      if (lastLongitude != null && lastLatitude != null) {
+        if (double.parse(lastLongitude) == longitude && double.parse(lastLatitude) == latitude) {
+          return;
+        }
+      }
+      final payload =
+          jsonEncode({'longitude': longitude, 'latitude': latitude});
+      final authToken = await secureStorageService.read(_keyAccessToken);
+      final response = await HttpClient.sendRequest(HttpMethod.PATCH, payload,
+          '${ApiConfig.baseUrl}${ApiConfig.updateUserLocation}', authToken: authToken);
+
+      if (response.statusCode == 204) {
+        // Sore the location into storage
+        await secureStorageService.write(SecureStorageService.KeyLongitude, longitude.toString());
+        await secureStorageService.write(SecureStorageService.KeyLatitude, latitude.toString());
+      }
+      if (kDebugMode) {
+        print('User-Location-Update:${response.statusCode}, ${response.body}');
+      }
+    } catch (error) {
+      if (kDebugMode) {
+        print("updateUserLocation-error----$error");
+      }
+    }
   }
 }
