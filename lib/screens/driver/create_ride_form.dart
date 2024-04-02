@@ -9,6 +9,7 @@ import 'package:ride_off_smart_ride_app_flutter/components/prediction_list_compo
 import 'package:ride_off_smart_ride_app_flutter/config/apiconfig.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/errorhelper.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/httpclient.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/driverCreateRideService.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/storage/secureStorageService.dart';
 import '../../../components/custom_suffix_icon.dart';
@@ -125,6 +126,7 @@ Future<void> create_Driver_Ride(String startAddress, String destinationAddress, 
                 duration: Duration(seconds: 2),
               ),
             );
+            Navigator.pushNamed(context, ChooseOptionScreen.routeName);
           }
         } else {
           _handleCreateRideError('Unexpected response format');

@@ -13,5 +13,6 @@ class ApiConfig {
 
   //Ride service
   static const String driverCreateRideEndPoint = '/ride/rides/driver';
+  static const String passengerFindRideEndPoint = '/ride/rides/rider';
   static const String getVehiclesEndpoint = '/auth/profile/vehicles';
 }

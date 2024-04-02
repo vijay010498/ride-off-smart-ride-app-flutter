@@ -36,12 +36,16 @@ const String lastNameNullError = "Please enter your last name";
 
 //Places API
 const String placesAPI = "GOOGLE MAPS API";
-//Create Ride Error
-const String modelNullError = "Please enter the car's model";
-const String brandNullError = "Please enter the car's brand";
+
+//Driver-Create Ride Error
 const String startNullError = "Please enter the Start Address";
 const String destinationNullError = "Please enter the Destination Address";
 const String seatsNullError = "Please enter number of seats";
+const String emptySeatsError = "Please enter a valid number of empty seats";
+
+//Rider-Find Ride Error
+const String priceNullError = "Please enter a valid Price";
+
 
 final otpInputDecoration = InputDecoration(
   contentPadding: const EdgeInsets.symmetric(vertical: 16),

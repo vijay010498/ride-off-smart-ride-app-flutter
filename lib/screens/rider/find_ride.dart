@@ -6,17 +6,21 @@ import 'package:ride_off_smart_ride_app_flutter/components/place_auto_complete_r
 import 'package:ride_off_smart_ride_app_flutter/components/prediction_list_component.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/errorhelper.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/httpclient.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/services/riderFindRideService.dart';
 import '../../../components/custom_suffix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
+import 'package:intl/intl.dart';
 
 class PassengerDetails {
   String? startAddress = "";
   String? destinationAddress = "";
   int? seats;
-  String? luggage = "";
-  DateTime date = DateTime.now();
+  int maxPrice = 1;
+  String date = DateTime.now().toString();
   TimeOfDay time = TimeOfDay.now();
+  String? tripDescription;
 }
 
 class FindPassengerRide extends StatelessWidget {
@@ -105,6 +109,37 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
       });
     }
   }
+
+  void _handleCreateRideError(dynamic errorMessage) {
+    new ErrorHelper().showErrorMessage(context, errorMessage);
+  }
+
+
+Future<void> find_Passenger_Ride(String startAddress, String destinationAddress, String date, int emptySeats, int maxPrice, String tripDescription) async {
+  try {
+        Map<String, dynamic>? response = await new RiderFindRideService().findRide(startAddress, destinationAddress, date, emptySeats, maxPrice, tripDescription);
+        Logger log = new Logger();
+        log.i('response service: ${response}');
+        if (response is Map<String, dynamic>) {
+          if (response.containsKey('error')) {
+            _handleCreateRideError(response['error']);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Finding Ride Details'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+            Navigator.pushNamed(context, ChooseOptionScreen.routeName);
+          }
+        } else {
+          _handleCreateRideError('Unexpected response format');
+        }
+      } catch (error) {
+        _handleCreateRideError(error);
+       }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -210,6 +245,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                         if (value.isNotEmpty) {
                           removeError(error: seatsNullError);
                         }
+                        passengerDetails.seats = int.parse(value);
                         return;
                       },
                       validator: (value) {
@@ -229,41 +265,60 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                     ),
                     SizedBox(height: 20),
                     TextFormField(
-                      onSaved: (newValue) => passengerDetails.luggage = newValue,
+                      keyboardType: TextInputType.number,
+                      initialValue: '1', 
                       onChanged: (value) {
+                      int? parsedValue = int.tryParse(value);
+                      if (parsedValue != null && parsedValue > 0) {
+                          removeError(error: priceNullError);
+                        }
                         return;
                       },
-                      decoration: const InputDecoration(
-                        labelText: "Luggage",
-                        hintText: "Number of Luggages",
+                      validator: (value) {
+                        int? parsedValue = int.tryParse(value!);
+                        if (parsedValue == null || parsedValue <= 0) {
+                          addError(error: priceNullError);
+                          return "";
+                        }
+                        return null;
+                      },
+                    decoration: const InputDecoration(
+                      labelText: "Empty Seats",
+                      hintText: "Number of empty seats",
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
+                      suffixIcon: Icon(Icons.event_seat),
+                    ),
+                  ),
+                    SizedBox(height: 20),
+                    _buildDateTimePicker('Date', passengerDetails.date, (value) {
+                    setState(() {
+                      passengerDetails.date = DateFormat('yyyy-MM-dd hh:mm a').format(value);
+                    });
+                  }),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      maxLines: 3,
+                      onChanged: (value) {
+                        setState(() {
+                          passengerDetails.tripDescription = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Trip Description',
+                        hintText: 'Enter a description for your trip (optional)',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
-                        suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Mail.svg"),
+                        border: OutlineInputBorder(),
                       ),
                     ),
                     SizedBox(height: 20),
-                    _buildDateTimePicker('Date', passengerDetails.date, (value) {
-                      setState(() {
-                        passengerDetails.date = value;
-                      });
-                    }),
-                    SizedBox(height: 20),
-                    _buildDateTimePicker('Time', passengerDetails.time, (value) {
-                      setState(() {
-                        passengerDetails.time = value;
-                      });
-                    }),
-                    SizedBox(height: 20),
-                    
                     ElevatedButton(
                       onPressed: () async {
-                        // TODO: Connect to backend
-
+                        
                         if (_formKey.currentState!.validate()) {
-                          Logger log = new Logger();
-                          log.i("Saved passenger details");
+                          find_Passenger_Ride(passengerDetails.startAddress!, passengerDetails.destinationAddress!, passengerDetails.date, passengerDetails.seats!, passengerDetails.maxPrice, passengerDetails.tripDescription!);
                         }
                       },
-                      child: Text('Save Passenger Details'),
+                      child: Text('Finding Ride Details'),
                     ),
                   ],
                 ),
@@ -278,50 +333,50 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
     
   }
 
-  Widget _buildDateTimePicker(String label, dynamic value, Function(dynamic) onChanged) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        Text('$label:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-        SizedBox(height: 20),
-        // Input field for date and time
-        if (label == 'Date')
-          TextButton(
-            onPressed: () async {
-              DateTime? pickedDate = await showDatePicker(
-                context: context,
-                initialDate: value,
-                firstDate: DateTime.now(),
-                lastDate: DateTime(2101),
+  Widget _buildDateTimePicker(
+  String label, String value, Function(DateTime) onChanged) {
+  DateTime initialValue = DateFormat('yyyy-MM-dd HH:mm').parse(value);
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Text('$label:',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      SizedBox(height: 20),
+      // Input field for date and time
+      TextButton(
+        onPressed: () async {
+          DateTime? pickedDateTime = await showDatePicker(
+            context: context,
+            initialDate: initialValue,
+            firstDate: DateTime.now(),
+            lastDate: DateTime(2101),
+          );
+
+          if (pickedDateTime != null) {
+            TimeOfDay? pickedTime = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.fromDateTime(initialValue),
+            );
+
+            if (pickedTime != null) {
+              pickedDateTime = DateTime(
+                pickedDateTime.year,
+                pickedDateTime.month,
+                pickedDateTime.day,
+                pickedTime.hour,
+                pickedTime.minute,
               );
 
-              if (pickedDate != null && pickedDate != value) {
-                onChanged(pickedDate);
-              }
-            },
-            child: Text(
-              '${value.year}-${value.month}-${value.day}',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-        if (label == 'Time')
-          TextButton(
-            onPressed: () async {
-              TimeOfDay? pickedTime = await showTimePicker(
-                context: context,
-                initialTime: value,
-              );
-
-              if (pickedTime != null && pickedTime != value) {
-                onChanged(pickedTime);
-              }
-            },
-            child: Text(
-              '${value.hour}:${value.minute}',
-              style: TextStyle(fontSize: 18),
-            ),
-          ),
-      ],
-    );
-  }
+              onChanged(pickedDateTime);
+            }
+          }
+        },
+        child: Text(
+          '$value',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+    ],
+  );
+}
 }
