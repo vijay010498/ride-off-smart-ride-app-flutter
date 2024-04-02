@@ -5,6 +5,7 @@
         android:required="false" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="ride_off_smart_ride_app_flutter"
         android:name="${applicationName}"

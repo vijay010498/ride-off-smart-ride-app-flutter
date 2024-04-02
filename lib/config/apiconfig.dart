@@ -10,6 +10,10 @@ class ApiConfig {
   static const String signUpEndpoint = '/auth/user/signup';
 
   static const String updateUserLocation = '/auth/user/location';
+  static const String logoutUser = '/auth/user/logout';
+  static const String getVehicleTypes = '/auth/profile/vehicle/types';
+  static const String createNewVehicle = '/auth/profile/vehicle';
+  static const String getUserVehicles = '/auth/profile/vehicles';
 
 
   // Verification service
