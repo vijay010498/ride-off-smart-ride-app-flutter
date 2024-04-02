@@ -3,7 +3,7 @@ import 'package:ride_off_smart_ride_app_flutter/components/autocomplete_predicti
 
 class PredictionListContainer extends StatelessWidget {
   final List<AutoCompletePrediction> predictions;
-  final Function(String) onPredictionSelected;
+  final Function(String, String) onPredictionSelected;
 
   PredictionListContainer({
     required this.predictions,
@@ -28,7 +28,7 @@ class PredictionListContainer extends StatelessWidget {
           return ListTile(
             title: Text(prediction.description ?? ''),
             onTap: () {
-              onPredictionSelected(prediction.description ?? '');
+              onPredictionSelected(prediction.description ?? '', prediction.placeId ?? '');
             },
           );
         },

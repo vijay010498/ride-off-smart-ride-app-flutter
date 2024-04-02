@@ -158,9 +158,9 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                     if (StartPredicitions.isNotEmpty)
                     PredictionListContainer(
                       predictions: StartPredicitions,
-                      onPredictionSelected: (selectedPrediction) {
+                      onPredictionSelected:  (selectedPrediction, placeId) {
                         setState(() {
-                          passengerDetails.startAddress = selectedPrediction; 
+                          passengerDetails.startAddress = placeId; 
                           StartController.text = selectedPrediction; 
                           StartPredicitions.clear(); 
                         });
@@ -195,9 +195,9 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                     if (DestinationPredicitions.isNotEmpty)
                       PredictionListContainer(
                         predictions: DestinationPredicitions,
-                        onPredictionSelected: (selectedPrediction) {
+                        onPredictionSelected:  (selectedPrediction, placeId){
                           setState(() {
-                            passengerDetails.destinationAddress = selectedPrediction; 
+                            passengerDetails.destinationAddress = placeId; 
                             DestinationController.text = selectedPrediction; 
                             DestinationPredicitions.clear(); 
                           });
