@@ -423,7 +423,7 @@ Widget build(BuildContext context) {
                   ElevatedButton(
                     onPressed: () async {
                        if (_formKey.currentState!.validate()) {
-                         create_Driver_Ride(rideDetails.startAddress!, rideDetails.destinationAddress!, rideDetails.stops, rideDetails.date, rideDetails.vehicleId!, rideDetails.luggage!, rideDetails.emptySeats, rideDetails.tripDescription!);
+                         create_Driver_Ride(rideDetails.startAddress!, rideDetails.destinationAddress!, rideDetails.stops, rideDetails.date, rideDetails.vehicleId!, rideDetails.luggage!, rideDetails.emptySeats, rideDetails.tripDescription  ?? "");
                         }
                     },
                     child: Text('Save Ride Details'),
@@ -441,6 +441,7 @@ Widget build(BuildContext context) {
 Widget _buildDateTimePicker(
   String label, String value, Function(DateTime) onChanged) {
   DateTime initialValue = DateFormat('yyyy-MM-dd HH:mm').parse(value);
+  String formattedValue = DateFormat('yyyy-MM-dd hh:mm a').format(initialValue); 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -477,7 +478,7 @@ Widget _buildDateTimePicker(
           }
         },
         child: Text(
-          '$value',
+          '$formattedValue',
           style: TextStyle(fontSize: 18),
         ),
       ),

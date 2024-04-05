@@ -256,8 +256,8 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                         return null;
                       },
                       decoration: const InputDecoration(
-                        labelText: "Number of Seats",
-                        hintText: "Enter the number of seats",
+                        labelText: "Maximum Price",
+                        hintText: "Enter the nmaximum price",
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         suffixIcon: CustomSuffixIcon(svgIcon: "assets/icons/Mail.svg"),
                       ),
@@ -283,8 +283,8 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                         return null;
                       },
                     decoration: const InputDecoration(
-                      labelText: "Empty Seats",
-                      hintText: "Number of empty seats",
+                      labelText: "Number of Seats",
+                      hintText: "Enter the number of seats",
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       suffixIcon: Icon(Icons.event_seat),
                     ),
@@ -315,7 +315,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                       onPressed: () async {
                         
                         if (_formKey.currentState!.validate()) {
-                          find_Passenger_Ride(passengerDetails.startAddress!, passengerDetails.destinationAddress!, passengerDetails.date, passengerDetails.seats!, passengerDetails.maxPrice, passengerDetails.tripDescription!);
+                          find_Passenger_Ride(passengerDetails.startAddress!, passengerDetails.destinationAddress!, passengerDetails.date, passengerDetails.seats!, passengerDetails.maxPrice, passengerDetails.tripDescription  ?? "");
                         }
                       },
                       child: Text('Finding Ride Details'),
@@ -336,6 +336,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
   Widget _buildDateTimePicker(
   String label, String value, Function(DateTime) onChanged) {
   DateTime initialValue = DateFormat('yyyy-MM-dd HH:mm').parse(value);
+  String formattedValue = DateFormat('yyyy-MM-dd hh:mm a').format(initialValue); 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -372,7 +373,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
           }
         },
         child: Text(
-          '$value',
+          '$formattedValue',
           style: TextStyle(fontSize: 18),
         ),
       ),
