@@ -14,6 +14,9 @@ import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifi
 import 'package:ride_off_smart_ride_app_flutter/screens/verification/start_verification.dart';
 import 'screens/splash/splash_screen.dart';
 import 'screens/signup/signup_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/bottom_navigation_bar.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/add_vehicle.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/vehicles_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => const SplashScreen(),
@@ -23,11 +26,12 @@ final Map<String, WidgetBuilder> routes = {
   FaceVerificationOptionsScreen.routeName: (context) => const FaceVerificationOptionsScreen(),
   StartVerification.routeName: (context) => const StartVerification(),
   CompleteVerification.routeName: (context) => const CompleteVerification(),
-  HomeScreen.routeName: (context) => const HomeScreen(),
+  HomeScreen.routeName: (context) => const BottomNavigationBarWidget(),
   BlockedMessageWidget.routeName: (context) => const BlockedMessageWidget(),
   ChooseOptionScreen.routeName: (context) => const ChooseOptionScreen(),
   CreateRideScreen.routeName: (context) => const CreateRideScreen(),
   FindPassengerRide.routeName: (context) => const FindPassengerRide(),
-
+AddVehicleScreenWidget.routeName: (context) => const AddVehicleScreenWidget(),
+  VehiclesScreenWidget.routeName: (context) =>  const VehiclesScreenWidget()
   
 };
