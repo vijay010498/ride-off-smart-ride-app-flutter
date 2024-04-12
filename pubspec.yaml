@@ -46,6 +46,8 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   google_maps_flutter: ^2.2.8
 
+  flutter_svg: any
+  image_picker: ^1.0.7
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -77,6 +79,7 @@ flutter:
   assets:
     - assets/images/
     - assets/animations/
+    - assets/icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,6 +1,7 @@
 //import 'dart:js';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/blocked_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/driver/create_ride_form.dart';
