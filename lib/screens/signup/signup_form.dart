@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/errorhelper.dart';
+import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/signupservice.dart';
 import '../../../components/custom_suffix_icon.dart';
 import '../../../components/form_error.dart';
@@ -149,7 +150,8 @@ void _handleSignUpError(dynamic errorMessage) {
                 if (_formKey.currentState!.validate()) {
                    _signUpUser(email!,firstName!,lastName!);
                   }
-                  // TODO Add the logic to proceed after validation
+                  Navigator.pushNamed(context, ChooseOptionScreen.routeName);
+               
                 
               },
               child: const Text("Continue"),
