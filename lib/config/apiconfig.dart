@@ -15,6 +15,7 @@ class ApiConfig {
   static const String createNewVehicle = '/auth/profile/vehicle';
   static const String getUserVehicles = '/auth/profile/vehicles';
 
+  static const String userOnlineStatus = '/auth/profile/status';
 
   // Verification service
   static const String faceVerification = '/verification/user';

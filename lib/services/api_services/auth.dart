@@ -218,6 +218,7 @@ class AuthService {
       return false;
     }
   }
+
   Future<List<Map<String, dynamic>>> getUserVehicles() async {
     try {
       final accessToken = await _getAccessToken();
@@ -237,6 +238,18 @@ class AuthService {
         throw Exception('Failed to fetch user vehicles');
       }
     } catch (error) {
+      if (kDebugMode) {
+        print("getUserVehicles-error----$error");
+      }
+      rethrow;
+    }
+  }
+
+  Future updateUserStatus() async {
+    try {
+      final accessToken = await _getAccessToken();
+      final updateUserStatusResponse = await Htt
+    } catch(error) {
       if (kDebugMode) {
         print("getUserVehicles-error----$error");
       }
