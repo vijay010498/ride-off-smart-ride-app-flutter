@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:logger/logger.dart';
 import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
 
 class HttpClient {
@@ -23,6 +24,13 @@ class HttpClient {
           headers: _createHeaders(authToken),
           body: payload,
         );
+        
+        Logger log = new Logger();
+        log.i("url : $url");
+        log.i("payload : $payload");
+        log.i("headers : ${response.headers}");
+        log.i("body : ${response.body}");
+        
         break;
       case HttpMethod.PUT:
         response = await http.put(
