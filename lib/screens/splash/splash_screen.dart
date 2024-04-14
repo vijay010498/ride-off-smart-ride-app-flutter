@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/blocked_screen.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/home/home_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/otp_phone_number/otp_phone_number_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifications_options.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
 
+import '../../services/locationservice.dart';
 import '../../services/storage/secureStorageService.dart';
+import '../home/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key})
       : super(key: key); // Corrected constructor definition
 
-  static String routeName = "/";
+  static String routeName = "/splash";
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,8 @@ final SecureStorageService secureStorageService = SecureStorageService();
 final AuthService authService = AuthService();
 
 class _SplashScreenStateState extends State<_SplashScreenState> {
+  final LocationService _locationService = LocationService();
+
   @override
   void initState() {
     super.initState();
@@ -37,10 +40,12 @@ class _SplashScreenStateState extends State<_SplashScreenState> {
 
   Future<void> _initializeApp() async {
     var currentUser = await authService.getCurrentUser();
-    if (currentUser != null && currentUser.isNotEmpty) {
+    if (currentUser.isNotEmpty) {
       var isBlocked = currentUser['isBlocked'] as bool?;
       var signedUp = currentUser['signedUp'] as bool?;
       var faceIdVerified = currentUser['faceIdVerified'] as bool?;
+      // Init Location Service
+      _locationService.initializeAndStart();
       if (isBlocked != null && isBlocked) {
         // user is blocked
         Navigator.pushNamedAndRemoveUntil(

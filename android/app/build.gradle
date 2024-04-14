@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.ride.off.smart.ride.ride_off_smart_ride_app_flutter"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

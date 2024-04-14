@@ -32,12 +32,10 @@ class VerifyOtpApiService {
       } else {
         print("Failed to Verify OTP: ${response.reasonPhrase}");
         return {'success': false, 'isSignedUp': false};
-        ;
       }
     } catch (error) {
       print("verifyOtp----$error");
       return {'success': false, 'isSignedUp': false};
-      ;
     }
   }
 }

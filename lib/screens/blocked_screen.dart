@@ -10,9 +10,9 @@ class BlockedMessageWidget extends StatelessWidget {
       appBar: AppBar(
         title: const Text('You are Blocked'),
       ),
-      body: Center(
+      body: const Center(
         child: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(20.0),
           child: Text(
             'You have been blocked. Please contact us ',
             style: TextStyle(
