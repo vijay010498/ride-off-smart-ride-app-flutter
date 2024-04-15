@@ -50,7 +50,7 @@ class LocationService {
 
   void _startSendingLocationPeriodically() {
     timer = Timer.periodic(
-        const Duration(seconds: 50), (Timer t) => _sendLocation());
+        const Duration(seconds: 30), (Timer t) => _sendLocation());
   }
 
   void dispose() {
