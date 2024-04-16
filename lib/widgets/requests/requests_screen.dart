@@ -105,8 +105,8 @@ class _RequestsScreenWidgetState extends State<RequestsScreenWidget> {
         RiderRequestDetails request = RiderRequestDetails(
             requestId : riderRequest['requestId'],
             riderId: riderRequest['riderId'],
-            driverRideId: riderRequest['driverRideId']['rideId'],
-            riderRideId: riderRequest['riderRideId']['rideId'],
+            driverRideId: riderRequest['driverRideId'],
+            riderRideId: riderRequest['riderRideId'],
             driverRideRequestId: riderRequest['driverRideRequestId'],
             status: riderRequest['status'],
             rideRequestDetails: riderRequest['rideRequestDetails'],

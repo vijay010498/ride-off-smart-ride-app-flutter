@@ -30,9 +30,38 @@ class RiderRequest extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    request.riderRideId['fromName'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.green[700],
+                    ),
+                  ),
+                ),
+                Icon(Icons.arrow_right_alt, color: Colors.grey[700]),
+                Expanded(
+                  child: Text(
+                    request.riderRideId['toName'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.red[700],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(height: 20, thickness: 1.5),
             _infoRow('Request ID', request.requestId),
-            _infoRow('Rider Ride ID', request.riderRideId),
-            _infoRow('Driver Ride ID', request.driverRideId),
+            _infoRow('Driver Origin', request.driverRideId['originName']),
+            _infoRow('Driver Destination', request.driverRideId['destinationName']),
+            _infoRow('Luggage', request.driverRideId['luggage']),
+            _infoRow('Total Seats', request.driverRideId['emptySeats']),
+            _infoRow('Empty Seats', request.driverRideId['emptySeats']),
             _infoRow('Status', statustext),
             _infoRow('Driver Price', '\$${request.priceByDriver}'),
             if (request.negotiatedPrice != null)

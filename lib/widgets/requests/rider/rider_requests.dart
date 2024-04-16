@@ -5,8 +5,8 @@ import 'package:ride_off_smart_ride_app_flutter/widgets/requests/rider/rider_req
 class RiderRequestDetails {
   final String requestId;
   final String riderId;
-  final String driverRideId;
-  final String riderRideId;
+  final dynamic driverRideId;
+  final dynamic riderRideId;
   final String driverRideRequestId;
   final String status;
   final dynamic rideRequestDetails;
