@@ -145,7 +145,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Passenger Details'),
+        title: const Text('Passenger Details'),
       ),
       body: Padding(
         
@@ -153,18 +153,18 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text("Enter Passenger Details", style: headingStyle),
-              Text("Fill the form to enter passenger details", textAlign: TextAlign.center),
-              SizedBox(height: 30),
+              const Text("Enter Passenger Details", style: headingStyle),
+              const Text("Fill the form to enter passenger details", textAlign: TextAlign.center),
+              const SizedBox(height: 30),
               
               SingleChildScrollView(
               child: Form(
                 key: _formKey,
                 child: Column(
                   children: [
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     FormError(errors: errors),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: StartController,
                       onSaved: (newValue) => passengerDetails.startAddress = newValue,
@@ -201,7 +201,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                         });
                       },
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       controller: DestinationController,
                       onSaved: (newValue) => passengerDetails.destinationAddress = newValue,
@@ -238,7 +238,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                           });
                         },
                       ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       onSaved: (newValue) => passengerDetails.seats = int.parse(newValue!),
                       onChanged: (value) {
@@ -263,7 +263,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                       ),
                       keyboardType: TextInputType.number,
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       initialValue: '1', 
@@ -289,13 +289,13 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                       suffixIcon: Icon(Icons.event_seat),
                     ),
                   ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     _buildDateTimePicker('Date', passengerDetails.date, (value) {
                     setState(() {
                       passengerDetails.date = DateFormat('yyyy-MM-dd hh:mm a').format(value);
                     });
                   }),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     TextFormField(
                       maxLines: 3,
                       onChanged: (value) {
@@ -303,14 +303,14 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                           passengerDetails.tripDescription = value;
                         });
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Trip Description',
                         hintText: 'Enter a description for your trip (optional)',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
                         
@@ -318,7 +318,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                           find_Passenger_Ride(passengerDetails.startAddress!, passengerDetails.destinationAddress!, passengerDetails.date, passengerDetails.seats!, passengerDetails.maxPrice, passengerDetails.tripDescription  ?? "");
                         }
                       },
-                      child: Text('Finding Ride Details'),
+                      child: const Text('Post'),
                     ),
                   ],
                 ),
@@ -341,8 +341,8 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       Text('$label:',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      SizedBox(height: 20),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 20),
       // Input field for date and time
       TextButton(
         onPressed: () async {
@@ -374,7 +374,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
         },
         child: Text(
           '$formattedValue',
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     ],

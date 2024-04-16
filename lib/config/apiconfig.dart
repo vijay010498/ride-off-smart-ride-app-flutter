@@ -24,4 +24,9 @@ class ApiConfig {
   static const String driverCreateRideEndPoint = '/ride/rides/driver';
   static const String passengerFindRideEndPoint = '/ride/rides/rider';
   static const String getVehiclesEndpoint = '/auth/profile/vehicles';
+
+
+  // match service
+static const String getUserRides = '/match/ride/rides';
+static const String getUserRequests = '/match/ride/requests';
 }

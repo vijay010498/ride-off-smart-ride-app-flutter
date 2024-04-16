@@ -88,9 +88,9 @@ class AuthService {
     try {
       // Compare last location to check should we make the API call
       var lastLongitude =
-      await secureStorageService.read(SecureStorageService.KeyLongitude);
+          await secureStorageService.read(SecureStorageService.KeyLongitude);
       var lastLatitude =
-      await secureStorageService.read(SecureStorageService.KeyLatitude);
+          await secureStorageService.read(SecureStorageService.KeyLatitude);
 
       if (lastLongitude != null && lastLatitude != null) {
         if (double.parse(lastLongitude) == longitude &&
@@ -99,7 +99,7 @@ class AuthService {
         }
       }
       final payload =
-      jsonEncode({'longitude': longitude, 'latitude': latitude});
+          jsonEncode({'longitude': longitude, 'latitude': latitude});
       final authToken = await _getAccessToken();
       final response = await HttpClient.sendRequest(HttpMethod.PATCH, payload,
           '${ApiConfig.baseUrl}${ApiConfig.updateUserLocation}',
@@ -154,8 +154,7 @@ class AuthService {
       } else {
         if (kDebugMode) {
           print(
-              "Failed to fetch vehicle types, status code: ${apiResponse
-                  .statusCode}");
+              "Failed to fetch vehicle types, status code: ${apiResponse.statusCode}");
         }
         return [];
       }
@@ -167,29 +166,27 @@ class AuthService {
     }
   }
 
-  Future<bool> createNewVehicle(List<File> vehicleImages,
-      String model,
-      String type,
-      String color,
-      String year,
-      String licensePlate,
-      String averageKmPerLitre,) async {
+  Future<bool> createNewVehicle(
+    List<File> vehicleImages,
+    String model,
+    String type,
+    String color,
+    String year,
+    String licensePlate,
+    String averageKmPerLitre,
+  ) async {
     try {
       final accessToken = await _getAccessToken();
 
-      var request = http.MultipartRequest(
-          'POST',
-          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.createNewVehicle}')
-      );
+      var request = http.MultipartRequest('POST',
+          Uri.parse('${ApiConfig.baseUrl}${ApiConfig.createNewVehicle}'));
 
       for (var imageFile in vehicleImages) {
-        request.files.add(
-            await http.MultipartFile.fromPath(
-              'vehicleImages',
-              imageFile.path,
-              contentType: MediaType('image', 'jpeg'),
-            )
-        );
+        request.files.add(await http.MultipartFile.fromPath(
+          'vehicleImages',
+          imageFile.path,
+          contentType: MediaType('image', 'jpeg'),
+        ));
       }
 
       request.fields['model'] = model;
@@ -232,7 +229,8 @@ class AuthService {
 
       if (userVehiclesResponse.statusCode == 200) {
         List<dynamic> jsonList = json.decode(userVehiclesResponse.body);
-        List<Map<String, dynamic>> vehicles = jsonList.map((e) => e as Map<String, dynamic>).toList();
+        List<Map<String, dynamic>> vehicles =
+            jsonList.map((e) => e as Map<String, dynamic>).toList();
         return vehicles;
       } else {
         throw Exception('Failed to fetch user vehicles');
@@ -245,16 +243,23 @@ class AuthService {
     }
   }
 
-  Future updateUserStatus() async {
+  Future<bool> updateUserStatus() async {
     try {
       final accessToken = await _getAccessToken();
-      final updateUserStatusResponse = await Htt
-    } catch(error) {
+      final updateUserStatusResponse = await HttpClient.sendRequest(
+          HttpMethod.PATCH,
+          null,
+          '${ApiConfig.baseUrl}${ApiConfig.userOnlineStatus}',
+          authToken: accessToken);
+
+      print('User Status Updated, ${updateUserStatusResponse.statusCode}');
+
+      return true;
+    } catch (error) {
       if (kDebugMode) {
         print("getUserVehicles-error----$error");
       }
       rethrow;
     }
   }
-
 }
