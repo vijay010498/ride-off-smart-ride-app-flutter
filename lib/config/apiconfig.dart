@@ -1,5 +1,4 @@
 class ApiConfig {
-
   // Auth service
   static const String baseUrl = 'http://10.0.2.2/api';
   static const String generateOtpEndpoint = '/auth/otp/generate';
@@ -25,8 +24,18 @@ class ApiConfig {
   static const String passengerFindRideEndPoint = '/ride/rides/rider';
   static const String getVehiclesEndpoint = '/auth/profile/vehicles';
 
-
   // match service
-static const String getUserRides = '/match/ride/rides';
-static const String getUserRequests = '/match/ride/requests';
+  static const String getUserRides = '/match/ride/rides';
+  static const String getUserRequests = '/match/ride/requests';
+  static const String driverGivesPrice = '/match/ride/driver/givePrice';
+  static const String driverDeclinesRequest =
+      '/match/ride/driver/declineRequest';
+  static const String driverAcceptsRequest = '/match/ride/driver/acceptRequest';
+
+
+  static const String riderAcceptRequest = '/match/ride/rider/acceptRequest';
+
+  static const String riderDeclinesRequest = '/match/ride/rider/declineRequest';
+
+  static const String riderNegotiateRequest = '/match/ride/rider/negotiate';
 }

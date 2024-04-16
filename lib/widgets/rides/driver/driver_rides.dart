@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ride_off_smart_ride_app_flutter/widgets/rides/driver_ride.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/rides/driver/driver_ride.dart';
 
 class DriverRideDetails {
   final String rideId;

@@ -72,8 +72,139 @@ class MatchService {
       }
     } catch (error) {
       if (kDebugMode) {
-        print("getRides-error----$error");
+        print("getRequests-error----$error");
       }
+    }
+  }
+
+  Future<bool> driverGivesPrice({required String requestId, required double price}) async {
+    try {
+      final accessToken = await _getAccessToken();
+      final payload =
+      jsonEncode({'price': price});
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, payload,
+          '${ApiConfig.baseUrl}${ApiConfig.driverGivesPrice}/$requestId'
+          , authToken: accessToken);
+
+
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("driverGivesPrice-error----$error");
+      }
+      return false;
+    }
+  }
+
+
+  Future<bool> driverDeclinesRequest({required String requestId}) async {
+    try {
+      final accessToken = await _getAccessToken();
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, null,
+          '${ApiConfig.baseUrl}${ApiConfig.driverDeclinesRequest}/$requestId'
+          , authToken: accessToken);
+
+
+      print(response.statusCode);
+      print(response.body);
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("driverDeclinesRequest-error----$error");
+      }
+      return false;
+    }
+  }
+
+
+
+  Future<bool> driverAcceptsRequest({required String requestId}) async {
+    try {
+      final accessToken = await _getAccessToken();
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, null,
+          '${ApiConfig.baseUrl}${ApiConfig.driverAcceptsRequest}/$requestId'
+          , authToken: accessToken);
+
+
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("driverAcceptsRequest-error----$error");
+      }
+      return false;
+    }
+  }
+
+  Future<bool> riderAcceptsRequest({required String requestId}) async {
+    try {
+      final accessToken = await _getAccessToken();
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, null,
+          '${ApiConfig.baseUrl}${ApiConfig.riderAcceptRequest}/$requestId'
+          , authToken: accessToken);
+
+
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("riderAcceptsRequest-error----$error");
+      }
+      return false;
+    }
+  }
+
+
+  Future<bool> riderDeclinesRequest({required String requestId}) async {
+    try {
+      final accessToken = await _getAccessToken();
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, null,
+          '${ApiConfig.baseUrl}${ApiConfig.riderDeclinesRequest}/$requestId'
+          , authToken: accessToken);
+
+
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("riderDeclinesRequest-error----$error");
+      }
+      return false;
+    }
+  }
+
+
+  Future<bool> riderNegotiatesPrice({required String requestId, required double price}) async {
+    try {
+      final accessToken = await _getAccessToken();
+      final payload =
+      jsonEncode({'price': price});
+
+      final response = await HttpClient.sendRequest(
+          HttpMethod.PATCH, payload,
+          '${ApiConfig.baseUrl}${ApiConfig.riderNegotiateRequest}/$requestId'
+          , authToken: accessToken);
+
+
+      if (response.statusCode == 200) return true;
+      return false;
+    } catch (error) {
+      if (kDebugMode) {
+        print("driverGivesPrice-error----$error");
+      }
+      return false;
     }
   }
 }

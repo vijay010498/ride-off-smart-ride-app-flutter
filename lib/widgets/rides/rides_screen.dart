@@ -2,8 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/match.dart';
-import 'package:ride_off_smart_ride_app_flutter/widgets/rides/driver_rides.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/rides/rider/rider_rides.dart';
+
+import 'driver/driver_rides.dart';
 
 class RidesScreenWidget extends StatefulWidget {
   static String routeName = "/rides_screen";
