@@ -15,8 +15,8 @@ class RiderRideDetails {
   final String toUrl;
   final String fromName;
   final String toName;
-  final String fromPostalCode;
-  final String toPostalCode;
+  final String? fromPostalCode;
+  final String? toPostalCode;
   final String fromCountryShortName;
   final String toCountryShortName;
   final String fromCountryLongName;
@@ -30,7 +30,7 @@ class RiderRideDetails {
   final int totalRideDistanceInMeters;
   final String status;
   final int seats;
-  final double? maxPrice;
+  final dynamic? maxPrice;
   final String? rideDescription; // Nullable
 
   RiderRideDetails(
@@ -48,8 +48,8 @@ class RiderRideDetails {
       required this.toUrl,
       required this.fromName,
       required this.toName,
-      required this.fromPostalCode,
-      required this.toPostalCode,
+      this.fromPostalCode,
+      this.toPostalCode,
       required this.fromCountryShortName,
       required this.toCountryShortName,
       required this.fromCountryLongName,

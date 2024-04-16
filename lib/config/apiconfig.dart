@@ -1,6 +1,6 @@
 class ApiConfig {
   // Auth service
-  static const String baseUrl = 'http://10.0.2.2/api';
+  static const String baseUrl = 'http://ride-o-loadb-7dchrlfedtyh-701025540.ca-central-1.elb.amazonaws.com/api';
   static const String generateOtpEndpoint = '/auth/otp/generate';
   static const String verifyOtpEndpoint = '/auth/otp/verify';
   static const String currentUserEndpoint = '/auth/user';

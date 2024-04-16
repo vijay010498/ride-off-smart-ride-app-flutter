@@ -17,8 +17,8 @@ class DriverRideDetails {
   final String destinationUrl;
   final String originName;
   final String destinationName;
-  final String originPostalCode;
-  final String destinationPostalCode;
+  final String? originPostalCode;
+  final String? destinationPostalCode;
   final String originCountryShortName;
   final String destinationCountryShortName;
   final String originCountryLongName;
@@ -54,8 +54,8 @@ class DriverRideDetails {
     required this.destinationUrl,
     required this.originName,
     required this.destinationName,
-    required this.originPostalCode,
-    required this.destinationPostalCode,
+    this.originPostalCode,
+    this.destinationPostalCode,
     required this.originCountryShortName,
     required this.destinationCountryShortName,
     required this.originCountryLongName,

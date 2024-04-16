@@ -60,14 +60,14 @@ class RiderRequest extends StatelessWidget {
             _infoRow('Driver Origin', request.driverRideId['originName']),
             _infoRow('Driver Destination', request.driverRideId['destinationName']),
             _infoRow('Luggage', request.driverRideId['luggage']),
-            _infoRow('Total Seats', request.driverRideId['emptySeats']),
-            _infoRow('Empty Seats', request.driverRideId['emptySeats']),
+            _infoRow('Total Seats', '${request.driverRideId['emptySeats']}'),
+            _infoRow('Empty Seats', '${request.driverRideId['availableSeats']}'),
             _infoRow('Status', statustext),
             _infoRow('Driver Price', '\$${request.priceByDriver}'),
             if (request.negotiatedPrice != null)
+              _infoRow('Accepted Price', '\$${request.negotiatedPrice}'),
+            if (request.negotiatedPrice != null)
               _infoRow('Your Price', '\$${request.negotiatedPrice}'),
-            if (request.acceptedPrice != null)
-              _infoRow('Confirmed Price', '\$${request.acceptedPrice}'),
             if (request.canNegotiate) _priceInputField(context, request),
             const Divider(height: 20, thickness: 1.5),
             if (request.canAccept)
@@ -126,7 +126,7 @@ class RiderRequest extends StatelessWidget {
                     showLoadingDialog(context, 'Negotiating Price');
                     final MatchService matchService = MatchService();
 
-                    final priceSent = await matchService.driverGivesPrice(
+                    final priceSent = await matchService.riderNegotiatesPrice(
                         requestId: request.requestId,
                         price: double.parse(_controller.text));
 

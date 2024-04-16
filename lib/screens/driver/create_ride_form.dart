@@ -126,7 +126,7 @@ Future<void> create_Driver_Ride(String startAddress, String destinationAddress, 
                 duration: Duration(seconds: 2),
               ),
             );
-            Navigator.pushNamed(context, ChooseOptionScreen.routeName);
+            Navigator.of(context).pop();
           }
         } else {
           _handleCreateRideError('Unexpected response format');
@@ -426,7 +426,7 @@ Widget build(BuildContext context) {
                          create_Driver_Ride(rideDetails.startAddress!, rideDetails.destinationAddress!, rideDetails.stops, rideDetails.date, rideDetails.vehicleId!, rideDetails.luggage!, rideDetails.emptySeats, rideDetails.tripDescription  ?? "");
                         }
                     },
-                    child: Text('Save Ride Details'),
+                    child: Text('Post Ride'),
                   ),
                 ],
               ),

@@ -126,10 +126,10 @@ class _RiderRequestsScreenWidget extends State<RiderRequestsScreenWidget>
                         statusText = 'WAITING_DRIVER_RESPONSE';
                         break;
                       case 'RIDER_RIDE_REQUEST_ACCEPTED_BY_DRIVER':
-                        statusText = 'DECLINED_BY_DRIVER';
+                        statusText = 'ACCEPTED_BY_DRIVER';
                         break;
                       case 'RIDER_RIDE_REQUEST_ACCEPTED_BY_RIDER':
-                        statusText = 'DECLINED_BY_RIDER(YOU)';
+                        statusText = 'ACCEPTED_BY_RIDER(YOU)';
                         break;
                       default:
                         statusText = 'UNKNOWN';

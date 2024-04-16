@@ -56,7 +56,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
   final predictionListContainer = [];
   List<AutoCompletePrediction> StartPredicitions = [];
   List<AutoCompletePrediction> DestinationPredicitions = [];
-  
+
 
   void placeAutoComplete(String query, List<AutoCompletePrediction> predictionsList) async {
     Uri uri = Uri.https(
@@ -75,10 +75,10 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
         PlaceAutoCompleteResponse result =
             PlaceAutoCompleteResponse.parseAutoCompleteResult(responseBody);
             Logger log = new Logger();
-            
+
         if (result.predictions != null) {
           setState(() {
-            predictionsList.clear(); 
+            predictionsList.clear();
             predictionsList.addAll(result.predictions!);
           });
         }
@@ -91,7 +91,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
       print('Request failed: $e');
     }
   }
-  
+
   void addError({String? error}) {
     if (!errors.contains(error)) {
       Logger log = new Logger();
@@ -117,7 +117,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
 
 Future<void> find_Passenger_Ride(String startAddress, String destinationAddress, String date, int emptySeats, int maxPrice, String tripDescription) async {
   try {
-        Map<String, dynamic>? response = await new RiderFindRideService().findRide(startAddress, destinationAddress, date, emptySeats, maxPrice, tripDescription);
+        Map<String, dynamic>? response = await new RiderFindRideService().findRide(startAddress, destinationAddress, date, maxPrice, emptySeats , tripDescription);
         Logger log = new Logger();
         log.i('response service: ${response}');
         if (response is Map<String, dynamic>) {
@@ -130,7 +130,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                 duration: Duration(seconds: 2),
               ),
             );
-            Navigator.pushNamed(context, ChooseOptionScreen.routeName);
+            Navigator.of(context).pop();
           }
         } else {
           _handleCreateRideError('Unexpected response format');
@@ -148,7 +148,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
         title: const Text('Passenger Details'),
       ),
       body: Padding(
-        
+
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
@@ -156,7 +156,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
               const Text("Enter Passenger Details", style: headingStyle),
               const Text("Fill the form to enter passenger details", textAlign: TextAlign.center),
               const SizedBox(height: 30),
-              
+
               SingleChildScrollView(
               child: Form(
                 key: _formKey,
@@ -195,9 +195,9 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                       predictions: StartPredicitions,
                       onPredictionSelected:  (selectedPrediction, placeId) {
                         setState(() {
-                          passengerDetails.startAddress = placeId; 
-                          StartController.text = selectedPrediction; 
-                          StartPredicitions.clear(); 
+                          passengerDetails.startAddress = placeId;
+                          StartController.text = selectedPrediction;
+                          StartPredicitions.clear();
                         });
                       },
                     ),
@@ -232,9 +232,9 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                         predictions: DestinationPredicitions,
                         onPredictionSelected:  (selectedPrediction, placeId){
                           setState(() {
-                            passengerDetails.destinationAddress = placeId; 
-                            DestinationController.text = selectedPrediction; 
-                            DestinationPredicitions.clear(); 
+                            passengerDetails.destinationAddress = placeId;
+                            DestinationController.text = selectedPrediction;
+                            DestinationPredicitions.clear();
                           });
                         },
                       ),
@@ -266,7 +266,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                     const SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.number,
-                      initialValue: '1', 
+                      initialValue: '1',
                       onChanged: (value) {
                       int? parsedValue = int.tryParse(value);
                       if (parsedValue != null && parsedValue > 0) {
@@ -313,7 +313,7 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
-                        
+
                         if (_formKey.currentState!.validate()) {
                           find_Passenger_Ride(passengerDetails.startAddress!, passengerDetails.destinationAddress!, passengerDetails.date, passengerDetails.seats!, passengerDetails.maxPrice, passengerDetails.tripDescription  ?? "");
                         }
@@ -324,19 +324,19 @@ Future<void> find_Passenger_Ride(String startAddress, String destinationAddress,
                 ),
               ),
               ),
-              
+
             ],
           ),
         ),
       )
       );
-    
+
   }
 
   Widget _buildDateTimePicker(
   String label, String value, Function(DateTime) onChanged) {
   DateTime initialValue = DateFormat('yyyy-MM-dd HH:mm').parse(value);
-  String formattedValue = DateFormat('yyyy-MM-dd hh:mm a').format(initialValue); 
+  String formattedValue = DateFormat('yyyy-MM-dd hh:mm a').format(initialValue);
   return Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [

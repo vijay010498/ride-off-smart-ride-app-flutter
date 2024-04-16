@@ -35,7 +35,7 @@ const String firstNameNullError = "Please enter your first name";
 const String lastNameNullError = "Please enter your last name";
 
 //Places API
-const String placesAPI = "GOOGLE MAPS API";
+const String placesAPI = "AIzaSyA2BHbGF69ps5YiJMj7FPHywcw8a-Wem3Q";
 
 //Driver-Create Ride Error
 const String startNullError = "Please enter the Start Address";

@@ -10,6 +10,7 @@ class RiderFindRideService{
     final SecureStorageService secureStorageService = SecureStorageService();
     
     Future<Map<String, dynamic>> findRide(String startAddress, String destinationAddress, String leaving, int seats, int maxPrice, String? rideDescription) async {
+      print(startAddress);
       final String? accessToken = await secureStorageService.read(SecureStorageService.keyAccessToken);
       //Logger log = new Logger();
       final payload = jsonEncode({'fromPlaceId': startAddress,'toPlaceId':destinationAddress, 'departing' :leaving, 'seats': seats, 'maxPrice': maxPrice, 'rideDescription': rideDescription});
