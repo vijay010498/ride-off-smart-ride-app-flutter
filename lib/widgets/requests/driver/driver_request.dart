@@ -30,11 +30,36 @@ class DriverRequest extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Text(
+                    request.riderRideId['fromName'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.green[700],
+                    ),
+                  ),
+                ),
+                Icon(Icons.arrow_right_alt, color: Colors.grey[700]),
+                Expanded(
+                  child: Text(
+                    request.riderRideId['toName'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      color: Colors.red[700],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const Divider(height: 20, thickness: 1.5),
             _infoRow('Request ID', request.requestId),
-            _infoRow('Driver ID', request.driverId),
-            _infoRow('Rider Ride ID', request.riderRideId),
-            _infoRow('Driver Ride ID', request.driverRideId),
             _infoRow('Status', statustext),
+            _infoRow('Distance', '${( request.riderRideId['totalRideDistanceInMeters'] / 1000).toStringAsFixed(1)} km'),
+            _infoRow('Duration', '${(request.riderRideId['totalRideDurationInSeconds'] / 60).toStringAsFixed(1)} minutes'),
             if (request.driverStartingPrice != null)
               _infoRow('Your Price', '\$${request.driverStartingPrice}'),
             if (request.riderRequestingPrice != null)
@@ -179,6 +204,16 @@ class DriverRequest extends StatelessWidget {
       ErrorHelper().showErrorMessage(context, 'An error occurred: $error');
     }
   }
+
+  String _shortenUrl(String url) {
+    const int maxDisplayLength = 20;
+    if (url.length <= maxDisplayLength) {
+      return url;
+    }
+    // Shorten URL and append ellipsis
+    return '${url.substring(0, maxDisplayLength - 3)}...';
+  }
+
 
   void showLoadingDialog(BuildContext context, String message) {
     showDialog(

@@ -72,8 +72,8 @@ class _RequestsScreenWidgetState extends State<RequestsScreenWidget> {
         DriverRequestDetails request = DriverRequestDetails(
             requestId: driverRequest['requestId'],
             driverId: driverRequest['driverId'],
-            riderRideId: driverRequest['riderRideId']['rideId'],
-            driverRideId: driverRequest['driverRideId']['rideId'],
+            riderRideId: driverRequest['riderRideId'],
+            driverRideId: driverRequest['driverRideId'],
             status: driverRequest['status'],
             rideRequestDetails: driverRequest['rideRequestDetails'],
             canDecline: driverRequest['canDecline'],
