@@ -4,9 +4,9 @@ import 'package:ride_off_smart_ride_app_flutter/services/storage/secureStorageSe
 import '../Enums/httpenums.dart';
 import '../config/apiconfig.dart';
 import '../helpers/httpclient.dart';
+import '../main.dart';
 
 class RiderFindRideService {
-  final SecureStorageService secureStorageService = SecureStorageService();
 
   Future<bool> findRide(
       {required String startAddress,
@@ -18,7 +18,7 @@ class RiderFindRideService {
     try {
 
       final String? accessToken =
-      await secureStorageService.read(SecureStorageService.keyAccessToken);
+      await storageService.read(SecureStorageService.keyAccessToken);
       Map<String, dynamic> payload = {
         'fromPlaceId': startAddress,
         'toPlaceId': destinationAddress,

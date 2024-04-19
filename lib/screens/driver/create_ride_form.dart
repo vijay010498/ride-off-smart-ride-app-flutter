@@ -16,6 +16,8 @@ import '../../../components/form_error.dart';
 import '../../../constants.dart';
 import 'package:intl/intl.dart';
 
+import '../../main.dart';
+
 class RideDetails {
 String? vehicleId = "";
 String? startAddress = "";
@@ -88,9 +90,8 @@ List<AutoCompletePrediction> StartPredicitions = [];
 List<AutoCompletePrediction> DestinationPredicitions = [];
 
 Future<Map<String, String>> getUserVehicles() async {
-  
-  final SecureStorageService secureStorageService = SecureStorageService();
-  final String? accessToken = await secureStorageService.read(SecureStorageService.keyAccessToken);
+
+  final String? accessToken = await storageService.read(SecureStorageService.keyAccessToken);
   final response = await HttpClient.sendRequest(HttpMethod.GET,'', '${ApiConfig.baseUrl}${ApiConfig.getVehiclesEndpoint}',authToken: accessToken);
   List<dynamic> responseBody = json.decode(response.body);
   final parsed = (responseBody).cast<Map<String, dynamic>>();

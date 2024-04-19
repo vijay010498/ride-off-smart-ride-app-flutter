@@ -5,17 +5,17 @@ import 'package:ride_off_smart_ride_app_flutter/Enums/httpenums.dart';
 import 'package:ride_off_smart_ride_app_flutter/config/apiconfig.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/httpclient.dart';
 
+import '../../main.dart';
 import '../storage/secureStorageService.dart';
 
 class MatchService {
-  final SecureStorageService secureStorageService = SecureStorageService();
 
   // Keys for secure storage
   static const String _keyAccessToken = SecureStorageService.keyAccessToken;
 
 
   Future<String?> _getAccessToken() async {
-    return secureStorageService.read(_keyAccessToken);
+    return storageService.read(_keyAccessToken);
   }
 
   Future<Map<String, dynamic>> getRides({String requestType = ''}) async {
