@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class VehicleDetails {
@@ -102,7 +101,7 @@ class VehicleDetailsCardWidget extends StatelessWidget {
             size: 20,
             color: Colors.grey[600],
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
         ],
         Padding(
           padding: const EdgeInsets.only(bottom: 5),

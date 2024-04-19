@@ -49,6 +49,8 @@ dependencies:
   flutter_svg: any
   image_picker: ^1.0.7
   url_launcher: ^6.2.6
+  intl: any
+  http_parser: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -36,7 +36,7 @@ class _RequestsScreenWidgetState extends State<RequestsScreenWidget> {
     super.initState();
     _getRequests();
     _timer = Timer.periodic(
-        Duration(seconds: 60), (Timer t) => _getRequests());
+        const Duration(seconds: 60), (Timer t) => _getRequests());
   }
 
   @override

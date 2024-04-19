@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/home/home_screen.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/signup/signup_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/account/account_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/requests/requests_screen.dart'; // import your home screen
 

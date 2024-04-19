@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ride_off_smart_ride_app_flutter/widgets/requests/driver/driver_request.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/requests/rider/rider_request.dart';
 
 class RiderRequestDetails {

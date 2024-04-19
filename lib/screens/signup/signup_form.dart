@@ -38,12 +38,12 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
 void _handleSignUpError(dynamic errorMessage) {
-    new ErrorHelper().showErrorMessage(context, errorMessage);
+    ErrorHelper().showErrorMessage(context, errorMessage);
   }
 
   void _signUpUser(String email, String firstName, String lastName) async {
       try {
-        Map<String, dynamic> response = await new SignUpApiService().signUpUser(email, firstName, lastName);
+        Map<String, dynamic> response = await SignUpApiService().signUpUser(email, firstName, lastName);
         bool success = response['success']!;
         if (success) {
           ScaffoldMessenger.of(context).showSnackBar(

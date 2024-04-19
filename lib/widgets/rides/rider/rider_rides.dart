@@ -30,7 +30,7 @@ class RiderRideDetails {
   final int totalRideDistanceInMeters;
   final String status;
   final int seats;
-  final dynamic? maxPrice;
+  final dynamic maxPrice;
   final String? rideDescription; // Nullable
 
   RiderRideDetails(

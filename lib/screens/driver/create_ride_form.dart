@@ -9,13 +9,11 @@ import 'package:ride_off_smart_ride_app_flutter/components/prediction_list_compo
 import 'package:ride_off_smart_ride_app_flutter/config/apiconfig.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/errorhelper.dart';
 import 'package:ride_off_smart_ride_app_flutter/helpers/httpclient.dart';
-import 'package:ride_off_smart_ride_app_flutter/screens/choose_type_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/driverCreateRideService.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/storage/secureStorageService.dart';
 import '../../../components/custom_suffix_icon.dart';
 import '../../../components/form_error.dart';
 import '../../../constants.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 class RideDetails {
@@ -36,13 +34,15 @@ const CreateRideScreen({super.key});
 
 @override
 Widget build(BuildContext context) {
-  return Scaffold(
+  return const Scaffold(
     body: RideDetailsScreen(),
   );
 }
 }
 
 class RideDetailsScreen extends StatefulWidget {
+  const RideDetailsScreen({super.key});
+
 @override
 _RideDetailsScreenState createState() => _RideDetailsScreenState();
 }
@@ -95,12 +95,12 @@ Future<Map<String, String>> getUserVehicles() async {
   List<dynamic> responseBody = json.decode(response.body);
   final parsed = (responseBody).cast<Map<String, dynamic>>();
   //Map<String, String> vehicleIdNameMap = {};
-  parsed.forEach((vehicle) {
+  for (var vehicle in parsed) {
     // Assuming 'model' field contains the Vehicle name
     String vehicleId = vehicle['vehicleId'];
     String vehicleName = vehicle['model'];
     vehicleIdNameMap[vehicleId] = vehicleName;
-  });
+  }
     dropDownValue = vehicleIdNameMap.keys.first;
     rideDetails.vehicleId = dropDownValue;
     //dropDownValue = vehicleIdNameMap.entries.first.value;
@@ -108,30 +108,26 @@ Future<Map<String, String>> getUserVehicles() async {
 } 
 
 void _handleCreateRideError(dynamic errorMessage) {
-    new ErrorHelper().showErrorMessage(context, errorMessage);
+    ErrorHelper().showErrorMessage(context, errorMessage);
   }
 
 Future<void> create_Driver_Ride(String startAddress, String destinationAddress, List<String> stops, String date, String vehicleId, String luggage, int emptySeats, String tripDescription) async {
   try {
-        Map<String, dynamic>? response = await new DriverCreateRideService().createRide(startAddress, destinationAddress, stops, date, vehicleId, luggage, emptySeats, tripDescription);
-        Logger log = new Logger();
-        log.i('response service: ${response}');
-        if (response is Map<String, dynamic>) {
-          if (response.containsKey('error')) {
-            _handleCreateRideError(response['error']);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Created Ride Successfully'),
-                duration: Duration(seconds: 2),
-              ),
-            );
-            Navigator.of(context).pop();
-          }
+        Map<String, dynamic>? response = await DriverCreateRideService().createRide(startAddress, destinationAddress, stops, date, vehicleId, luggage, emptySeats, tripDescription);
+        Logger log = Logger();
+        log.i('response service: $response');
+        if (response.containsKey('error')) {
+          _handleCreateRideError(response['error']);
         } else {
-          _handleCreateRideError('Unexpected response format');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Created Ride Successfully'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          Navigator.of(context).pop();
         }
-      } catch (error) {
+            } catch (error) {
         _handleCreateRideError(error);
        }
 }
@@ -147,7 +143,7 @@ void placeAutoComplete(String query, List<AutoCompletePrediction> predictionsLis
     final response =
         await HttpClient.sendRequest(HttpMethod.GET, null, uri.toString());
 
-    final httpResponse = await response;
+    final httpResponse = response;
     String responseBody = response.body;
     if (httpResponse.statusCode == 200) {
       PlaceAutoCompleteResponse result =
@@ -189,23 +185,23 @@ void removeError({String? error}) {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
-      title: Text('Ride Details'),
+      title: const Text('Ride Details'),
     ),
     body: Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
-            Text("Create a ride", style: headingStyle),
-            Text("Fill form to create a ride", textAlign: TextAlign.center),
-            SizedBox(height: 30),
-            SizedBox(height: 10),
+            const Text("Create a ride", style: headingStyle),
+            const Text("Fill form to create a ride", textAlign: TextAlign.center),
+            const SizedBox(height: 30),
+            const SizedBox(height: 10),
             FormError(errors: errors),
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                     value: dropDownValue,
                     onChanged: (newValue) {
@@ -222,7 +218,7 @@ Widget build(BuildContext context) {
                         child: Text(entry.value), 
                       );
                     }).toList(),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'Select Vehicle',
                       hintText: 'Choose a vehicle',
                       // Add any desired styling or decoration here
@@ -234,7 +230,7 @@ Widget build(BuildContext context) {
                       return null;
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: StartController,
                     onSaved: (newValue) =>
@@ -273,7 +269,7 @@ Widget build(BuildContext context) {
                        });
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: StopsController,
                    onSaved: (newValue) {
@@ -307,7 +303,7 @@ Widget build(BuildContext context) {
                       });
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     controller: DestinationController,
                     onSaved: (newValue) =>
@@ -346,13 +342,13 @@ Widget build(BuildContext context) {
                       });
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   _buildDateTimePicker('Date', rideDetails.date, (value) {
                     setState(() {
                       rideDetails.date = DateFormat('yyyy-MM-dd hh:mm a').format(value);
                     });
                   }),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   DropdownButtonFormField<String>(
                       value: luggageOptions[0],
                       onChanged: (newValue) {
@@ -366,7 +362,7 @@ Widget build(BuildContext context) {
                           child: Text(value),
                         );
                       }).toList(),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Luggage',
                         hintText: 'Select Luggage',
                         // Add any desired styling or decoration here
@@ -378,7 +374,7 @@ Widget build(BuildContext context) {
                         return null;
                       },
                     ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextFormField(
                     keyboardType: TextInputType.number,
                     initialValue: '1', 
@@ -404,7 +400,7 @@ Widget build(BuildContext context) {
                       suffixIcon: Icon(Icons.event_seat),
                     ),
                   ),
-                   SizedBox(height: 20),
+                   const SizedBox(height: 20),
                     TextFormField(
                       maxLines: 3,
                       onChanged: (value) {
@@ -412,21 +408,21 @@ Widget build(BuildContext context) {
                           rideDetails.tripDescription = value;
                         });
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Trip Description',
                         hintText: 'Enter a description for your trip (optional)',
                         floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: OutlineInputBorder(),
                       ),
                     ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () async {
                        if (_formKey.currentState!.validate()) {
                          create_Driver_Ride(rideDetails.startAddress!, rideDetails.destinationAddress!, rideDetails.stops, rideDetails.date, rideDetails.vehicleId!, rideDetails.luggage!, rideDetails.emptySeats, rideDetails.tripDescription  ?? "");
                         }
                     },
-                    child: Text('Post Ride'),
+                    child: const Text('Post Ride'),
                   ),
                 ],
               ),
@@ -446,8 +442,8 @@ Widget _buildDateTimePicker(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
       Text('$label:',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-      SizedBox(height: 20),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+      const SizedBox(height: 20),
       // Input field for date and time
       TextButton(
         onPressed: () async {
@@ -478,8 +474,8 @@ Widget _buildDateTimePicker(
           }
         },
         child: Text(
-          '$formattedValue',
-          style: TextStyle(fontSize: 18),
+          formattedValue,
+          style: const TextStyle(fontSize: 18),
         ),
       ),
     ],

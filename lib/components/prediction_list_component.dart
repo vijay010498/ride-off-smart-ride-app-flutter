@@ -5,7 +5,7 @@ class PredictionListContainer extends StatelessWidget {
   final List<AutoCompletePrediction> predictions;
   final Function(String, String) onPredictionSelected;
 
-  PredictionListContainer({
+  const PredictionListContainer({super.key, 
     required this.predictions,
     required this.onPredictionSelected,
   });

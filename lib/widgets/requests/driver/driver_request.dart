@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/match.dart';
 
@@ -110,24 +109,24 @@ class DriverRequest extends StatelessWidget {
   }
 
   Widget _priceInputField(BuildContext context, DriverRequestDetails request) {
-    TextEditingController _controller = TextEditingController();
+    TextEditingController controller = TextEditingController();
     return Row(
       children: [
         Expanded(
           child: TextField(
-            controller: _controller,
+            controller: controller,
             decoration: InputDecoration(
               hintText: 'Enter price',
               suffixIcon: IconButton(
                 icon: const Icon(Icons.send, color: Colors.green),
                 onPressed: () async {
-                  if (_validatePrice(_controller.text)) {
+                  if (_validatePrice(controller.text)) {
                     showLoadingDialog(context, 'Sending Price');
                     final MatchService matchService = MatchService();
 
                     final priceSent = await matchService.driverGivesPrice(
                         requestId: request.requestId,
-                        price: double.parse(_controller.text));
+                        price: double.parse(controller.text));
 
                     if (priceSent) {
                       onAction();
@@ -137,7 +136,7 @@ class DriverRequest extends StatelessWidget {
                       ErrorHelper().showErrorMessage(
                           context, 'Server Error, Please try again later');
                     }
-                    _controller.clear();
+                    controller.clear();
                   } else {
                     ErrorHelper().showErrorMessage(context, 'Invalid Price');
                   }

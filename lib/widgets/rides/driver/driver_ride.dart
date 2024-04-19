@@ -47,9 +47,9 @@ class DriverRide extends StatelessWidget {
               ],
             ),
             const Divider(height: 20, thickness: 1.5),
-            _infoRow('Status', '${ride.status}'),
-            _infoRow('Departure', '${ride.leaving}'),
-            _infoRow('Arrival', '${ride.arrivalTime}'),
+            _infoRow('Status', ride.status),
+            _infoRow('Departure', ride.leaving),
+            _infoRow('Arrival', ride.arrivalTime),
             _infoRow('Distance', '${(ride.totalRideDistanceInMeters / 1000).toStringAsFixed(1)} km'),
             _infoRow('Duration', '${(ride.totalRideDurationInSeconds / 60).toStringAsFixed(1)} minutes'),
             _infoRow('Fuel Cost', '\$${ride.totalRideAverageFuelCost}'),
@@ -103,9 +103,9 @@ class DriverRide extends StatelessWidget {
   }
 
   Future<void> _launchURL(String url) async {
-    final Uri _url = Uri.parse(url);
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+    final Uri url0 = Uri.parse(url);
+    if (!await launchUrl(url0)) {
+      throw Exception('Could not launch $url0');
     }
   }
 

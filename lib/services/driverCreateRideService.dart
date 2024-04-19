@@ -14,7 +14,7 @@ class DriverCreateRideService{
       //Logger log = new Logger();
       final payload = jsonEncode({'originPlaceId': startAddress,'destinationPlaceId':destinationAddress, 'stops':stops, 'leaving' :leaving, 'vehicleId': vehicleId, 'luggage': luggage, 'emptySeats': emptySeats, 'tripDescription': tripDescription});
       final response =  await HttpClient.sendRequest(HttpMethod.POST, payload, '${ApiConfig.baseUrl}${ApiConfig.driverCreateRideEndPoint}',authToken: accessToken);
-     Logger log = new Logger();
+     Logger log = Logger();
         log.i('response service1: ${response.statusCode}');
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseBody = json.decode(response.body);
