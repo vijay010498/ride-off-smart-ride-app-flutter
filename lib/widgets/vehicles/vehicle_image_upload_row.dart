@@ -14,7 +14,7 @@ class VehicleImageUploadRowWidget extends StatefulWidget {
 
 class _VehicleImageUploadRowWidgetState
     extends State<VehicleImageUploadRowWidget> {
-  List<File> _pickedImages = [];
+  final List<File> _pickedImages = [];
   final ScrollController _scrollController = ScrollController();
 
   void _handleImagePicked(File image) {

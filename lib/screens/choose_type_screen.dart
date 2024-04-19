@@ -12,42 +12,44 @@ class ChooseOptionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
      appBar: AppBar(
-        title: const Text("Choose one"),
+        title: const Text("Create Rides"),
         automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
 
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, CreateRideScreen.routeName);
-                },
-                child: const Text(
-                  'Create a ride', 
-                  style: TextStyle(fontSize: 20.0)
+        child: SizedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, CreateRideScreen.routeName);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 180.0),
+                  ),
+                  child: const Text(
+                    'Post a Ride',
+                    style: TextStyle(fontSize: 20.0)
+                  ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 180.0), 
+              const SizedBox(height: 40),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, FindPassengerRide.routeName);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 180.0),
+                  ),
+                  child: const Text(
+                    'Find a ride',
+                    style: TextStyle(fontSize: 20.0)),
                 ),
-              ),
-            SizedBox(height: 40),
-            ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, FindPassengerRide.routeName);
-                },
-                child: const Text(
-                  'Find a ride',
-                  style: TextStyle(fontSize: 20.0)),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 180.0), 
-                ),
-              ),
-            
-          ],
+
+            ],
+          ),
         ),
       ),
       ),

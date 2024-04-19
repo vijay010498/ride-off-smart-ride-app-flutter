@@ -5,9 +5,9 @@ import 'package:ride_off_smart_ride_app_flutter/services/storage/secureStorageSe
 import '../Enums/httpenums.dart';
 import '../config/apiconfig.dart';
 import '../helpers/httpclient.dart';
+import '../main.dart';
 
 class VerifyOtpApiService {
-  final SecureStorageService secureStorageService = SecureStorageService();
 
   Future<Map<String, dynamic>> verifyOtp(String phoneNumber, String otp) async {
     try {
@@ -22,9 +22,9 @@ class VerifyOtpApiService {
         final responseBody = jsonDecode(response.body);
         final accessToken = responseBody['accessToken'] as String;
         final refreshToken = responseBody['refreshToken'] as String;
-        await secureStorageService.write(
+        await storageService.write(
             SecureStorageService.keyAccessToken, accessToken);
-        await secureStorageService.write(
+        await storageService.write(
             SecureStorageService.keyRefreshToken, refreshToken);
         final isSignedUp = responseBody['isSignedUp'] as bool;
 

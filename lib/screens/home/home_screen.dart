@@ -11,5 +11,4 @@ class HomeScreen extends StatelessWidget {
       body: Text('Home Screen'),
     );
   }
-
 }

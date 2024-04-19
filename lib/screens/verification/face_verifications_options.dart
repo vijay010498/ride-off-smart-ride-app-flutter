@@ -49,7 +49,7 @@ class FaceVerificationOptionsScreen extends StatelessWidget {
             const SizedBox(height: 20),
             TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
               },
               child: const Text('Skip for Now'),
             ),

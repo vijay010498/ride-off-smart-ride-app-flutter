@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/account/profile_section.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/account/settings_item.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/rides/rides_screen.dart';
 
 import '../../screens/otp_phone_number/otp_phone_number_screen.dart';
 import '../vehicles/vehicles_screen.dart';
@@ -25,6 +26,9 @@ class AccountScreenWidget extends StatelessWidget {
                     0.8), // Adjust the maxHeight as needed
             child: Column(
               children: [
+                SettingsItemWidget(title: 'My Rides', onTap: () {
+                  Navigator.pushNamed(context, RidesScreenWidget.routeName);
+                },),
                 SettingsItemWidget(title: 'My Vehicles', onTap: () {
                   Navigator.pushNamed(context, VehiclesScreenWidget.routeName);
                 },),

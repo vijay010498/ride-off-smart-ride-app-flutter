@@ -25,7 +25,7 @@ class HttpClient {
           body: payload,
         );
         
-        Logger log = new Logger();
+        Logger log = Logger();
         log.i("url : $url");
         log.i("payload : $payload");
         log.i("headers : ${response.headers}");

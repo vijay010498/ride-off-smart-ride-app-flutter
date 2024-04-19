@@ -10,6 +10,8 @@ import 'package:ride_off_smart_ride_app_flutter/screens/otp_phone_number/otp_pho
 import 'package:ride_off_smart_ride_app_flutter/screens/rider/find_ride.dart';
 import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifications_options.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/bottom_navigation_bar.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/requests/requests_screen.dart';
+import 'package:ride_off_smart_ride_app_flutter/widgets/rides/rides_screen.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/add_vehicle.dart';
 import 'package:ride_off_smart_ride_app_flutter/widgets/vehicles/vehicles_screen.dart';
 import 'screens/splash/splash_screen.dart';
@@ -32,5 +34,6 @@ final Map<String, WidgetBuilder> routes = {
   CreateRideScreen.routeName: (context) => const CreateRideScreen(),
   FindPassengerRide.routeName: (context) => const FindPassengerRide(),
   AddVehicleScreenWidget.routeName: (context) => const AddVehicleScreenWidget(),
-  VehiclesScreenWidget.routeName: (context) => const VehiclesScreenWidget()
+  RidesScreenWidget.routeName: (context) => const RidesScreenWidget(),
+  RequestsScreenWidget.routeName: (context) => const RequestsScreenWidget(),
 };

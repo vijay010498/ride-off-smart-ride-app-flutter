@@ -6,7 +6,6 @@ import 'package:ride_off_smart_ride_app_flutter/screens/verification/face_verifi
 import 'package:ride_off_smart_ride_app_flutter/services/api_services/auth.dart';
 
 import '../../services/locationservice.dart';
-import '../../services/storage/secureStorageService.dart';
 import '../home/home_screen.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -26,7 +25,6 @@ class _SplashScreenState extends StatefulWidget {
   _SplashScreenStateState createState() => _SplashScreenStateState();
 }
 
-final SecureStorageService secureStorageService = SecureStorageService();
 final AuthService authService = AuthService();
 
 class _SplashScreenStateState extends State<_SplashScreenState> {

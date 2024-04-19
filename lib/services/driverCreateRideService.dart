@@ -5,16 +5,16 @@ import 'package:ride_off_smart_ride_app_flutter/services/storage/secureStorageSe
 import '../Enums/httpenums.dart';
 import '../config/apiconfig.dart';
 import '../helpers/httpclient.dart';
+import '../main.dart';
 
 class DriverCreateRideService{
-    final SecureStorageService secureStorageService = SecureStorageService();
     
     Future<Map<String, dynamic>> createRide(String startAddress, String destinationAddress, List<String> stops, String leaving, String vehicleId, String luggage, int emptySeats, String? tripDescription) async {
-      final String? accessToken = await secureStorageService.read(SecureStorageService.keyAccessToken);
+      final String? accessToken = await storageService.read(SecureStorageService.keyAccessToken);
       //Logger log = new Logger();
       final payload = jsonEncode({'originPlaceId': startAddress,'destinationPlaceId':destinationAddress, 'stops':stops, 'leaving' :leaving, 'vehicleId': vehicleId, 'luggage': luggage, 'emptySeats': emptySeats, 'tripDescription': tripDescription});
       final response =  await HttpClient.sendRequest(HttpMethod.POST, payload, '${ApiConfig.baseUrl}${ApiConfig.driverCreateRideEndPoint}',authToken: accessToken);
-     Logger log = new Logger();
+     Logger log = Logger();
         log.i('response service1: ${response.statusCode}');
       if (response.statusCode == 201) {
         final Map<String, dynamic> responseBody = json.decode(response.body);

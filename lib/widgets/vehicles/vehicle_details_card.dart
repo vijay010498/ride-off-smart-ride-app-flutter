@@ -41,7 +41,7 @@ class VehicleDetailsCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
+            Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 _buildDetailText(
@@ -101,7 +101,7 @@ class VehicleDetailsCardWidget extends StatelessWidget {
             size: 20,
             color: Colors.grey[600],
           ),
-          SizedBox(width: 5),
+          const SizedBox(width: 5),
         ],
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
@@ -143,19 +143,40 @@ class VehicleDetailsCardWidget extends StatelessWidget {
   }
 }
 
-class BigImageScreen extends StatelessWidget {
+class BigImageScreen extends StatefulWidget {
   final String imageUrl;
 
   const BigImageScreen({Key? key, required this.imageUrl}) : super(key: key);
+
+  @override
+  _BigImageScreenState createState() => _BigImageScreenState();
+}
+
+class _BigImageScreenState extends State<BigImageScreen> {
+  double _scale = 1.0;
+  double _previousScale = 1.0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: Center(
-        child: Image.network(
-          imageUrl,
-          fit: BoxFit.contain,
+        child: GestureDetector(
+          onScaleStart: (ScaleStartDetails details) {
+            _previousScale = _scale;
+          },
+          onScaleUpdate: (ScaleUpdateDetails details) {
+            setState(() {
+              _scale = _previousScale * details.scale;
+            });
+          },
+          child: Transform.scale(
+            scale: _scale,
+            child: Image.network(
+              widget.imageUrl,
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );
